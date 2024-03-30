@@ -1,12 +1,12 @@
 from django.db import models
-import datetime
-from django.core.validators import MaxValueValidator, MinValueValidator
-
+from _datetime import datetime
+import uuid
 
 # time functions
 
+
 def current_year():
-    return datetime.date.today().year
+    return datetime.today().year
 
 
 class CarInsurance(models.Model):
@@ -28,9 +28,10 @@ class CarInsurance(models.Model):
     )
 
     # predefined fields
-    policy_name = models.CharField(max_length=100)
+    policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    policy_name = models.CharField(max_length=100, unique=True)
     policy_description = models.TextField(max_length=2000)
-    valid_to = models.DateField(auto_now=True)
+    valid_to = models.DateField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
     car_model = models.CharField(max_length=100)
@@ -46,6 +47,29 @@ class CarInsurance(models.Model):
         return f"Nazwa polisy: {self.policy_name}"
 
 
+class HouseInsurance(models.Model):
+
+    HOUSE_TYPES = (
+        (1, "Dom"),
+        (2, "Szeregowiec"),
+        (3, "Mieszkanie")
+    )
+
+    # predefined fields
+    policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    policy_name = models.CharField(max_length=100, unique=True)
+    policy_description = models.TextField(max_length=2000)
+    valid_to = models.DateField()
+    price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    # form fields
+    house_type = models.CharField(max_length=100, choices=HOUSE_TYPES)
+    number_of_owners = models.PositiveSmallIntegerField(default=1)
+    house_area = models.PositiveIntegerField()
+    house_city = models.CharField(max_length=50)
+    house_value = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return f"Nazwa polisy: {self.policy_name}"
 
 
 
