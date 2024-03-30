@@ -5,19 +5,24 @@
 {% block content %}
     <h2>Oferujemy następujące polisy:</h2>
     <h2>Polisy samochodowe:</h2>
-    {% for car_insurance in car_insurances %}
-        <div>{{ car_insurance.policy_name }}
-            <a href="{% url 'policy_detail' car_insurance.policy_id %}">Zobacz szczegóły</a> 
-        </div>
-    {% empty %}
-        <div>Brak dostępnych polis samochodowych.</div>
-    {% endfor %}
+    <ul>
+        {% for car_insurance in car_insurances %}
+            <li>{{ car_insurance.policy_name }}
+                <a href="{% url 'policy_detail' car_insurance.policy_id %}" class="btn btn-primary">Zobacz szczegóły</a>
+            </li>
+        {% empty %}
+            <li>Brak dostępnych polis samochodowych.</li>
+        {% endfor %}
+    </ul>
+
     <h2>Polisy na dom:</h2>
-    {% for house_insurance in house_insurances %}
-        <div>Produkt: {{ house_insurance.policy_name }}
-               <a href="{% url 'policy_detail' house_insurance.policy_id %}">Zobacz szczegóły</a>
-        </div>
-    {% empty %}
-        <div>Brak dostępnych polis na dom.</div>
-    {% endfor %}
+    <ul>
+        {% for house_insurance in house_insurances %}
+            <li>Produkt: {{ house_insurance.policy_name }}
+                <a href="{% url 'policy_detail' house_insurance.policy_id %}" class="btn btn-primary">Zobacz szczegóły</a>
+            </li>
+        {% empty %}
+            <li>Brak dostępnych polis na dom.</li>
+        {% endfor %}
+    </ul>
 {% endblock content %}

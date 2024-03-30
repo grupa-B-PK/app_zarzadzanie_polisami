@@ -1,16 +1,16 @@
 from django.shortcuts import render
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, ListView
 
 from .models import CarInsurance, HouseInsurance
 
 class IndexView(TemplateView):
     template_name = 'index'
 
-class PolicyListView(TemplateView):
+class PolicyListView(ListView):
     template_name = 'policy_list.html'
+    context_object_name = 'policy_list'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['car_insurances'] = CarInsurance.objects.all()
-        context['house_insurances'] = HouseInsurance.objects.all()
-        return context
+    def get_queryset(self):
+        car_insurances = CarInsurance.objects.all()
+        house_insurances = HouseInsurance.objects.all()
+        return list(car_insurances) + list(house_insurances)
