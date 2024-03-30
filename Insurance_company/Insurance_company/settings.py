@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'insurance_app'
+    'insurance_app',
 ]
 
 MIDDLEWARE = [
