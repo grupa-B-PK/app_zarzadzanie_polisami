@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}
+Detale wybranej polisy
+{% endblock title %}
+
+{% block content %}
+    <h1>Oto wybrana przez ciebie polisa:</h1>
+    {% if car_insurance %}
+        <p>Nazwa: {{ car_insurance.policy_name }}</p>
+        <p>Opis: {{ car_insurance.policy_description }}</p>
+        <p>Przykładowa cena: {{ car_insurance.price }}</p>
+        <a href="{% url 'policy_calculate' car_insurance.id %}">Podaj swoje wartości i przelicz polisę</a>
+    {% elif house_insurance %}
+        <p>Nazwa: {{ house_insurance.policy_name }}</p>
+        <p>Opis: {{ house_insurance.policy_description }}</p>
+        <p>Przykładowa cena: {{ house_insurance.price }}</p>
+        <a href="{% url 'policy_calculate' house_insurance.id %}">Podaj swoje wartości i przelicz polisę</a>
+    {% endif %}
+    
+    <a href="{% url 'policy_list' %}">Powrót do listy polis</a>
+{% endblock content %}

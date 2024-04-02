@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import View, TemplateView, ListView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .models import CarInsurance, HouseInsurance
 
@@ -14,3 +15,10 @@ class PolicyListView(ListView):
         car_insurances = CarInsurance.objects.all()
         house_insurances = HouseInsurance.objects.all()
         return list(car_insurances) + list(house_insurances)
+
+class PolicyDetailView(LoginRequiredMixin, View):
+    def get(self, request, id):
+        car_insurance = get_object_or_404(CarInsurance, id=id)
+        house_insurance = get_object_or_404(HouseInsurance, id=id)
+        ctx = {'car_insurance': car_insurance, 'house_insurance': house_insurance}
+        return render(request, 'policy_detail.html', ctx)
