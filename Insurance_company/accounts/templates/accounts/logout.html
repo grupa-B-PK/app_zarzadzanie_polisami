@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock title %}
+
+{% block logout %}{% endblock logout %}
+{% block content %}
+
+Czy chcesz się wylogować?
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="Wyloguj">
+</form>
+{% endblock content %}
