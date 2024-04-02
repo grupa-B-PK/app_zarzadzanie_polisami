@@ -18,7 +18,10 @@ from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
 
+from insurance_app.views import PolicyListView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', TemplateView.as_view(template_name='index.html')),
+    path('policy_list/', PolicyListView.as_view(), name='policy_list'),
 ]

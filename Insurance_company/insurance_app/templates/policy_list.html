@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Dostępne polisy{% endblock title %}
+
+{% block content %}
+    <h2>Oferujemy następujące polisy:</h2>
+    <h2>Polisy samochodowe:</h2>
+    <ul>
+        {% for car_insurance in car_insurances %}
+            <li>{{ car_insurance.policy_name }}
+                <a href="{% url 'policy_detail' car_insurance.policy_id %}" class="btn btn-primary">Zobacz szczegóły</a>
+            </li>
+        {% empty %}
+            <li>Brak dostępnych polis samochodowych.</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Polisy na dom:</h2>
+    <ul>
+        {% for house_insurance in house_insurances %}
+            <li>Produkt: {{ house_insurance.policy_name }}
+                <a href="{% url 'policy_detail' house_insurance.policy_id %}" class="btn btn-primary">Zobacz szczegóły</a>
+            </li>
+        {% empty %}
+            <li>Brak dostępnych polis na dom.</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
