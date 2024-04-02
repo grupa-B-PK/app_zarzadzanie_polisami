@@ -8,7 +8,7 @@
     <ul>
         {% for car_insurance in car_insurances %}
             <li>{{ car_insurance.policy_name }}
-                <a href="{% url 'policy_detail' car_insurance.policy_id %}" class="btn btn-primary">Zobacz szczegóły</a>
+                <a href="{% url 'policy_detail' car_insurance.policy_id %}">Zobacz szczegóły</a>
             </li>
         {% empty %}
             <li>Brak dostępnych polis samochodowych.</li>
@@ -19,7 +19,7 @@
     <ul>
         {% for house_insurance in house_insurances %}
             <li>Produkt: {{ house_insurance.policy_name }}
-                <a href="{% url 'policy_detail' house_insurance.policy_id %}" class="btn btn-primary">Zobacz szczegóły</a>
+                <a href="{% url 'policy_detail' house_insurance.policy_id %}">Zobacz szczegóły</a>
             </li>
         {% empty %}
             <li>Brak dostępnych polis na dom.</li>
