@@ -1,9 +1,8 @@
 from django.urls import path
 
-from insurance_app.views import PolicyListView, PolicyDetailView
+from insurance_app.views import OfferListView, OfferDetailView
 
 urlpatterns = [
-    path('policy_list/', PolicyListView.as_view(), name='policy_list'),
-    path('policy_detail/<int:id>/', PolicyDetailView.as_view(), name="policy_detail"),
-
+    path('offer_list/', OfferListView.as_view(), name='offer_list'),
+    path('offer_detail/', OfferDetailView.as_view(), name='offer_detail'),
 ]
