@@ -25,7 +25,7 @@
                 <a class="nav-link" href="/">Strona główna</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/wycena-polisy">Kup polisę</a>
+                <a class="nav-link" href="{% url 'offer_list' %}">Kup polisę</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -33,8 +33,8 @@
                     Produkty
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="/produkty/samochod/">Samochód</a>
-                    <a class="dropdown-item" href="/produkty/dom/">Dom i mieszkanie</a>
+                    <a class="dropdown-item" href="{% url 'offer_detail' %}">Samochód</a>
+                    <a class="dropdown-item" href="{% url 'offer_detail' %}">Dom i mieszkanie</a>
                 </div>
             </li>
             <li class="nav-item">
