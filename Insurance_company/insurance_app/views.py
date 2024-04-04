@@ -16,16 +16,22 @@ class OfferListView(ListView):
     context_object_name = 'offer_list'
 
     def get_queryset(self):
-        car_insurances = CarInsurance.objects.all()
-        house_insurances = HouseInsurance.objects.all()
-        return list(car_insurances) + list(house_insurances)
+        car_insurance = CarInsurance.objects.all()
+        house_insurance = HouseInsurance.objects.all()
+        return list(car_insurance) + list(house_insurance)
 
 
 class OfferDetailView(View):
     def get(self, request, *args, **kwargs):
         car_insurance = CarInsurance.objects.all()
         house_insurance = HouseInsurance.objects.all()
-        ctx = {'car_insurance': car_insurance, 'house_insurance': house_insurance}
+
+        ctx = {}
+        if 'car' in request.GET:
+            ctx['car_insurance'] = car_insurance
+        elif 'house' in request.GET:
+            ctx['house_insurance'] = house_insurance
+
         return render(request, 'offer_detail.html', ctx)
 
 
