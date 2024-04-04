@@ -23,9 +23,9 @@ class OfferListView(ListView):
 
 class OfferDetailView(View):
     def get(self, request, *args, **kwargs):
-        car_insurances = CarInsurance.objects.all()
-        house_insurances = HouseInsurance.objects.all()
-        ctx = {'car_insurances': car_insurances, 'house_insurances': house_insurances}
+        car_insurance = CarInsurance.objects.all()
+        house_insurance = HouseInsurance.objects.all()
+        ctx = {'car_insurance': car_insurance, 'house_insurance': house_insurance}
         return render(request, 'offer_detail.html', ctx)
 
 
@@ -57,3 +57,4 @@ def policy_car_detail(request, policy_id):
     }
 
     return render(request, "policy_car_detail.html", context=ctx)
+
