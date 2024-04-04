@@ -6,7 +6,9 @@ Detale ofert wybranego typu
 
 {% block content %}
     <h1>Oto oferta, która może cię zainteresować:</h1>
+
     {% if car_insurance %}
+        <h2>Oferty samochodowe:</h2>
         {% for offer in car_insurance %}
             <p>Nazwa: {{ offer.policy_name }}</p>
             <p>Opis: {{ offer.policy_description }}</p>
@@ -14,14 +16,17 @@ Detale ofert wybranego typu
             <a href="{% url 'policy_car_create' %}">Kup polisę na samochód</a>
         {% endfor %}
     {% endif %}
+
     {% if house_insurance %}
+        <h2>Oferty domowe:</h2>
         {% for offer in house_insurance %}
             <p>Nazwa: {{ offer.policy_name }}</p>
             <p>Opis: {{ offer.policy_description }}</p>
             <p>Przykładowa cena: {{ offer.price }}</p>
-            <a href="{% url 'policy_house_create' %}">Kup polisę na dom</a>
+            <a href="{% url 'index' %}">Kup polisę na dom</a>  <!-- here will be policy_house_create -->
         {% endfor %}
     {% endif %}
+
     {% if not car_insurance and not house_insurance %}
         <p>Chwilowo brak dostępnych ofert.</p>
     {% endif %}
