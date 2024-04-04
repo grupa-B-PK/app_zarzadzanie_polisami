@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Podsumowanie wyceny:
+{% endblock title %}
+
+{% block content %}
+    <h2> Podsumowanie wyceny:</h2>
+    <p>Numer polisy: {{ car_policy.policy_id }}</p>
+    <p>Nazwa polisy: {{ car_policy.policy_name }}</p>
+    <p>Opis: {{ car_policy.policy_description }}</p>
+    <p>Termin obowiązywania ochorny: {{ car_policy.valid_to }}</p>
+    <p>Wysokość składki: "Do uzupełnienia przy ustaleniu logiki do przeliczenia składki" </p>
+    <p>Model samochodu: {{ car_policy.car_model }}</p>
+    <p>Rok produkcji: {{ car_policy.production_year }}</p>
+    <p>Typ paliwa: {{ car_policy.fuel_type }}</p>
+    <p>Przebieg: {{ car_policy.mileage }}</p>
+    <p>Czy wynajmowane: {{ car_policy.is_rented }}</p>
+    <p>Liczba współwłaścicieli: {{ car_policy.is_rented }}</p>
+    <p>Kierowca poniżej 26 roku życia: {{ car_policy.driver_under_26 }}</p>
+
+    <a href="{% url 'offer_list' %}">Zawrzyj umowę</a>
+
+
+    <div><a href="{% url 'index' %}">Anuluj</a></div>
+{% endblock content %}
