@@ -1,5 +1,5 @@
 from django.db import models
-from _datetime import datetime
+from _datetime import datetime, date
 import uuid
 
 # time functions
@@ -21,16 +21,30 @@ class CarInsurance(models.Model):
     )
 
     AVERAGE_YEAR_MILEAGE = (
-        (1, "Poniżej 5 tys. km"), # kategorie przebiegu do wykorzystania w kalkulatorze
-        (2, "do 10 tys. km"),
-        (3, "do 20 tys. km"),
-        (4, "powyżej 20 tys. km")
+        ("Poniżej 5 tys. km", "Poniżej 5 tys. km"), # kategorie przebiegu do wykorzystania w kalkulatorze
+        ("do 10 tys. km", "do 10 tys. km"),
+        ("do 20 tys. km", "do 20 tys. km"),
+        ("powyżej 20 tys. km", "powyżej 20 tys. km")
     )
+
+    POLICY_TYPES = (
+        ("Standard OC", "Standard OC"),
+        ("OC + AC", "OC + AC"),
+        ("PREMIUM", "PREMIUM"),
+    )
+
+    POLICY_DESC = {
+        "Standard OC" : "Ubezpieczenie odpowiedzialności cywilnej (OC) samochodu obejmuje przede wszystkim rekompensatę szkód, powstałych w wyniku spowodowania kolizji lub wypadku drogowego. Dotyczy to zarówno szkód osobowych, jak i materialnych. Co istotne, polisa OC przypisana jest do konkretnego samochodu, a nie do jego właściciela.",
+        "OC + AC" : "Ubezpieczenie OC pokrywa szkody osoby przez nas poszkodowanej, z kolei odszkodowanie z tytułu AC likwiduje szkody własne. Zakres ubezpieczenia OC jest identyczny bez względu na zakład ubezpieczeń, zaś w przypadku polisy AC panuje pełna dowolność, dlatego oferta każdej firmy może być zupełnie inna.",
+        "PREMIUM" : "Ubezpieczenie w Wariancie PREMIUM obejmuje utratę, zniszczenie lub uszkodzenie pojazdu wraz z wyposażeniem podstawowym, w zakresie szkody częściowej i całkowitej powstałej w wyniku zdarzeń nie wyłączonych z zakresu odpowiedzialności. Ubezpieczenie obejmuje parkowanie pojazdu po szkodzie w każdym wariancie."
+    }
+
 
     # predefined fields
     policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     policy_name = models.CharField(max_length=100, unique=True)
-    policy_description = models.TextField(max_length=2000)
+    policy_type = models.CharField(max_length=100, choices=POLICY_TYPES, default="Standard OC")
+    policy_description = models.TextField()
     valid_to = models.DateField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
@@ -46,13 +60,29 @@ class CarInsurance(models.Model):
     def __str__(self):
         return f"Nazwa polisy: {self.policy_name}"
 
+    @property
+    def valid_to_status(self):
+        if self.valid_to < date.today():
+            return "Your car is protected - policy is up to date."
+        else:
+            return "Policy is expired"
+
+    @property
+    def get_desc(self):
+        description = CarInsurance.POLICY_DESC[CarInsurance.policy_type]
+        return description
+
+
+
+
+
 
 class HouseInsurance(models.Model):
 
     HOUSE_TYPES = (
-        (1, "Dom"),
-        (2, "Szeregowiec"),
-        (3, "Mieszkanie")
+        ("Dom", "Dom"),
+        ("Szeregowiec", "Szeregowiec"),
+        ("Mieszkanie", "Mieszkanie")
     )
 
     # predefined fields

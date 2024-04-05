@@ -13,7 +13,7 @@ base = 600
 production_year = 2010
 fuel_type = "LPG"
 mileage = 350000
-average_year_mileage = 3
+average_year_mileage = "do 10 tys. km"
 is_rented = True
 number_of_owners = 1
 
@@ -42,7 +42,15 @@ def mileage_factor(mileage):
     else: mileage_factor = (mileage // 1000) * 0.0044
     return mileage_factor
 
-avg_mil_factor = average_year_mileage * 0.05
+def avg_mil_factor(average_year_mileage):
+    if average_year_mileage == "Poniżej 5 tys. km":
+        return 0.05
+    if average_year_mileage == "do 10 tys. km":
+        return 0.07
+    if average_year_mileage == "do 20 tys. km":
+        return 0.09
+    else:
+        return 0.1
 
 def rented_factor(is_rented):
     if is_rented:
@@ -61,7 +69,7 @@ def owners_factor(number_of_owners):
     return owners_factor
 
 def calculate_price():
-     return (base*fuel_factor*mileage_factor(mileage)*avg_mil_factor*rented_factor(is_rented)*owners_factor(
+     return (base*fuel_factor*mileage_factor(mileage)*avg_mil_factor(average_year_mileage)*rented_factor(is_rented)*owners_factor(
          number_of_owners))+age_factor
 
 print(calculate_price())
