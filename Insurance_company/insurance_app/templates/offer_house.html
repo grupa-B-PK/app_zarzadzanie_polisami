@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
 {% block title %}
-Detale ofert polis na samochód
+Detale ofert polis na dom
 {% endblock title %}
 
 {% block content %}
-    <h1>Oto nasze propozycje polis na samochód, wybrane specjalnie dla Ciebie:</h1>
+    <h1>Oto nasze propozycje polis na dom, wybrane specjalnie dla Ciebie:</h1>
 
     <ul>
         {% for policy_type, policy_description in policy_descriptions.items %}
             <li>
             <div>Nazwa polisy: {{ policy_type }}</div>
             <div>Opis: {{ policy_description }}</div>
-            <div><a href="{% url 'policy_car_create' %}">Kup ten wariant polisy na samochód</a></div>
+            <div><a href="{% url 'policy_house_create' %}">Kup ten wariant polisy na dom</a></div></li>
             <div><hr></div></li>
         {% endfor %}
     </ul>

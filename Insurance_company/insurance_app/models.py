@@ -79,6 +79,18 @@ class HouseInsurance(models.Model):
         ("Mieszkanie", "Mieszkanie")
     )
 
+    POLICY_TYPES = (
+        ("Standard", "Standard"),
+        ("Premium", "Premium"),
+        ("Super Premium", "Super Premium")
+    )
+
+    POLICY_DESC = {
+        "Standard": "Standardowe ubezpieczenie domu zapewnia ochronę na wypadek szkód spowodowanych pożarem, zalaniem, kradzieżą i innymi zdarzeniami określonymi w polisie. Obejmuje ono także koszty naprawy lub odbudowy uszkodzonego budynku oraz jego wyposażenia.",
+        "Premium": "Ubezpieczenie wariantu Premium oferuje rozszerzony zakres ochrony w porównaniu do standardowej polisy. Dodatkowo może obejmować np. zabezpieczenie przed ryzykiem zalania z powodzi, kradzieżą z włamaniem, czy uszkodzeniem wyposażenia ogrodu.",
+        "Super Premium": "Najwyższy wariant ubezpieczenia domu, znany również jako Super Premium, to gwarancja najszerszego zakresu ochrony. Zapewnia on kompleksowe zabezpieczenie na wypadek praktycznie wszystkich ryzyk, włączając w to nawet najbardziej nietypowe sytuacje."
+    }
+
     # predefined fields
     policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     policy_name = models.CharField(max_length=100, unique=True)
