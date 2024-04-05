@@ -5,11 +5,12 @@ from .models import CarInsurance, HouseInsurance
 class CarInsuranceModelForm(forms.ModelForm):
     class Meta:
         model = CarInsurance
-        fields = ["policy_name", "valid_to", "car_model", "production_year", "fuel_type", "mileage",
+        fields = ["policy_name", "policy_type", "valid_to", "car_model", "production_year", "fuel_type", "mileage",
                   "average_year_mileage", "is_rented",
                   "number_of_owners", "driver_under_26"]
         labels = {
             'policy_name': "Nazwa polisy",
+            'policy_type': 'Typ polisy',
             'valid_to': 'Termin ochorny',
             'car_model': 'Model samochodu',
             'production_year': 'Rok produkcji',

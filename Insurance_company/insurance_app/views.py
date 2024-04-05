@@ -10,30 +10,17 @@ from .models import CarInsurance, HouseInsurance
 class IndexView(TemplateView):
     template_name = 'index'
 
+class MainPageView(TemplateView):
+    template_name = 'main_page'
 
-class OfferListView(ListView):
-    template_name = 'offer_list.html'
-    context_object_name = 'offer_list'
-
-    def get_queryset(self):
-        car_insurance = CarInsurance.objects.all()
-        house_insurance = HouseInsurance.objects.all()
-        return list(car_insurance) + list(house_insurance)
-
-
-class OfferDetailView(View):
+class OfferCarView(View):
     def get(self, request, *args, **kwargs):
-        car_insurance = CarInsurance.objects.all()
-        house_insurance = HouseInsurance.objects.all()
+        policy_types = CarInsurance.POLICY_TYPES
+        ctx = {'policy_types': policy_types}
+        return render(request, 'offer_car.html', ctx)
 
-        ctx = {}
-        if 'car' in request.GET:
-            ctx['car_insurance'] = car_insurance
-        elif 'house' in request.GET:
-            ctx['house_insurance'] = house_insurance
-
-        return render(request, 'offer_detail.html', ctx)
-
+class OfferHouseView(View):
+    pass
 
 def policy_car_create(request):
     car_policy_form = CarInsuranceModelForm()

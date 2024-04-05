@@ -22,7 +22,7 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'index' %}">Strona główna</a>
+                <a class="nav-link" href="{% url 'main_page' %}">Strona główna</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -32,8 +32,8 @@
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
 
 
-                    <a class="dropdown-item" href="{% url 'offer_detail' %}?car">Samochód</a>
-                    <a class="dropdown-item" href="{% url 'offer_detail' %}?house">Dom i mieszkanie</a>
+                    <a class="dropdown-item" href="{% url 'offer_car' %}">Samochód</a>
+                    <a class="dropdown-item" href="{% url 'index' %}">Dom i mieszkanie</a>  <!-- PLACEHOLDER-->
 
                 </div>
             </li>
