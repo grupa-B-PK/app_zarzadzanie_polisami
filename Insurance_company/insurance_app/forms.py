@@ -26,8 +26,7 @@ class CarInsuranceModelForm(forms.ModelForm):
 class HouseInsuranceModelForm(forms.ModelForm):
     class Meta:
         model = HouseInsurance
-        fields = ["policy_name", "valid_to", "house_type", "number_of_owners", "house_area", "house_city",
-                  "house_value"]
+        fields = ["policy_name", "valid_to", "house_type", "number_of_owners", "house_area", "house_city", "house_value"]
         labels = {
             'policy_name': "Nazwa polisy",
             'valid_to': 'Termin ochorny',

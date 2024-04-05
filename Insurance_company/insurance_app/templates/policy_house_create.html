@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Wypełnij formularz dla polisy na dom, aby sprawdzić składkę{% endblock title %}
+
+{% block content %}
+    <div>{{ error }}</div>
+    <form action="/insurance_app/policy_house_create/" method="post">
+        {% csrf_token %}
+        {{ house_policy_form }}
+        <input type="submit" value="Przelicz">
+
+    </form>
+    <br><br>
+    <div><a href="{% url "index" %}">Anuluj</a></div>
+
+
+{% endblock content %}
