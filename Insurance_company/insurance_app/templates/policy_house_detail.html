@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Podsumowanie wyceny:
+{% endblock title %}
+
+{% block content %}
+    <h2> Podsumowanie wyceny:</h2>
+    <p>Numer polisy: {{ house_policy.policy_id }}</p>
+    <p>Nazwa polisy: {{ house_policy.policy_name }}</p>
+    <p>Opis: {{ house_policy.policy_description }}</p>
+    <p>Termin obowiązywania ochorny: {{ house_policy.valid_to }}</p>
+    <p>Wysokość składki: "Do uzupełnienia przy ustaleniu logiki do przeliczenia składki" </p>
+    <p>Typ domu: {{ house_policy.house_type }}</p>
+    <p>Powierzchnia domu: {{ house_policy.house_area }}</p>
+    <p>Miasto: {{ house_policy.house_city }}</p>
+    <p>Wartość domu: {{ house_policy.house_value }}</p>
+    <p>Liczba właścicieli: {{ house_policy.number_of_owners }}</p>
+
+
+    <a href="{% url 'index' %}">Zawrzyj umowę</a>
+
+
+    <div><a href="{% url 'index' %}">Anuluj</a></div>
+{% endblock content %}

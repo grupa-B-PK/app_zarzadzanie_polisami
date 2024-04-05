@@ -2,6 +2,7 @@ from django.db import models
 from _datetime import datetime, date
 import uuid
 
+
 # time functions
 
 
@@ -10,7 +11,6 @@ def current_year():
 
 
 class CarInsurance(models.Model):
-
     FUEL_TYPES = (
         ("Gasoline", "Gasoline"),
         ("Diesel", "Diesel"),
@@ -21,7 +21,7 @@ class CarInsurance(models.Model):
     )
 
     AVERAGE_YEAR_MILEAGE = (
-        ("Poniżej 5 tys. km", "Poniżej 5 tys. km"), # kategorie przebiegu do wykorzystania w kalkulatorze
+        ("Poniżej 5 tys. km", "Poniżej 5 tys. km"),  # kategorie przebiegu do wykorzystania w kalkulatorze
         ("do 10 tys. km", "do 10 tys. km"),
         ("do 20 tys. km", "do 20 tys. km"),
         ("powyżej 20 tys. km", "powyżej 20 tys. km")
@@ -34,11 +34,10 @@ class CarInsurance(models.Model):
     )
 
     POLICY_DESC = {
-        "Standard OC" : "Ubezpieczenie odpowiedzialności cywilnej (OC) samochodu obejmuje przede wszystkim rekompensatę szkód, powstałych w wyniku spowodowania kolizji lub wypadku drogowego. Dotyczy to zarówno szkód osobowych, jak i materialnych. Co istotne, polisa OC przypisana jest do konkretnego samochodu, a nie do jego właściciela.",
-        "OC + AC" : "Ubezpieczenie OC pokrywa szkody osoby przez nas poszkodowanej, z kolei odszkodowanie z tytułu AC likwiduje szkody własne. Zakres ubezpieczenia OC jest identyczny bez względu na zakład ubezpieczeń, zaś w przypadku polisy AC panuje pełna dowolność, dlatego oferta każdej firmy może być zupełnie inna.",
-        "PREMIUM" : "Ubezpieczenie w Wariancie PREMIUM obejmuje utratę, zniszczenie lub uszkodzenie pojazdu wraz z wyposażeniem podstawowym, w zakresie szkody częściowej i całkowitej powstałej w wyniku zdarzeń nie wyłączonych z zakresu odpowiedzialności. Ubezpieczenie obejmuje parkowanie pojazdu po szkodzie w każdym wariancie."
+        "Standard OC": "Ubezpieczenie odpowiedzialności cywilnej (OC) samochodu obejmuje przede wszystkim rekompensatę szkód, powstałych w wyniku spowodowania kolizji lub wypadku drogowego. Dotyczy to zarówno szkód osobowych, jak i materialnych. Co istotne, polisa OC przypisana jest do konkretnego samochodu, a nie do jego właściciela.",
+        "OC + AC": "Ubezpieczenie OC pokrywa szkody osoby przez nas poszkodowanej, z kolei odszkodowanie z tytułu AC likwiduje szkody własne. Zakres ubezpieczenia OC jest identyczny bez względu na zakład ubezpieczeń, zaś w przypadku polisy AC panuje pełna dowolność, dlatego oferta każdej firmy może być zupełnie inna.",
+        "PREMIUM": "Ubezpieczenie w Wariancie PREMIUM obejmuje utratę, zniszczenie lub uszkodzenie pojazdu wraz z wyposażeniem podstawowym, w zakresie szkody częściowej i całkowitej powstałej w wyniku zdarzeń nie wyłączonych z zakresu odpowiedzialności. Ubezpieczenie obejmuje parkowanie pojazdu po szkodzie w każdym wariancie."
     }
-
 
     # predefined fields
     policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -73,12 +72,7 @@ class CarInsurance(models.Model):
         return description
 
 
-
-
-
-
 class HouseInsurance(models.Model):
-
     HOUSE_TYPES = (
         ("Dom", "Dom"),
         ("Szeregowiec", "Szeregowiec"),
@@ -100,9 +94,3 @@ class HouseInsurance(models.Model):
 
     def __str__(self):
         return f"Nazwa polisy: {self.policy_name}"
-
-
-
-
-
-

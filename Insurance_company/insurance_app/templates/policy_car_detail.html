@@ -16,10 +16,10 @@
     <p>Typ paliwa: {{ car_policy.fuel_type }}</p>
     <p>Przebieg: {{ car_policy.mileage }}</p>
     <p>Czy wynajmowane: {{ car_policy.is_rented }}</p>
-    <p>Liczba współwłaścicieli: {{ car_policy.is_rented }}</p>
+    <p>Liczba właścicieli: {{ car_policy.number_of_owners }}</p>
     <p>Kierowca poniżej 26 roku życia: {{ car_policy.driver_under_26 }}</p>
 
-    <a href="{% url 'offer_list' %}">Zawrzyj umowę</a>
+    <a href="{% url 'index' %}">Zawrzyj umowę</a>
 
 
     <div><a href="{% url 'index' %}">Anuluj</a></div>
