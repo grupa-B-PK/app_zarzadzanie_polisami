@@ -18,12 +18,17 @@ class MainPageView(TemplateView):
 class OfferCarView(View):
     def get(self, request, *args, **kwargs):
         policy_types = CarInsurance.POLICY_TYPES
-        ctx = {'policy_types': policy_types}
+        policy_descriptions = CarInsurance.POLICY_DESC
+        ctx = {'policy_types': policy_types, 'policy_descriptions': policy_descriptions}
         return render(request, 'offer_car.html', ctx)
 
 
 class OfferHouseView(View):
-    pass
+    def get(self, request, *args, **kwargs):
+        policy_types = HouseInsurance.POLICY_TYPES
+        policy_descriptions = HouseInsurance.POLICY_DESC
+        ctx = {'policy_types': policy_types, 'policy_descriptions': policy_descriptions}
+        return render(request, 'offer_house.html', ctx)
 
 
 def policy_car_create(request):
