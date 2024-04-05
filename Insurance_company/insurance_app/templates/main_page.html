@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Główna strona{% endblock title %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">Insurance App:</h2>
+        <h3 class="text-center mb-5">Najlepsza firma ubezpieczeniowa: zawsze dla Ciebie i zawsze po Twojej stronie!</h3>
+        
+        <div class="text-center mb-5">
+            <a href="{% url 'offer_car' %}">Zapoznaj się z naszymi polisami na samochód</a>
+        </div>
+
+        <div class="text-center mb-5">
+            <a href="{% url 'index' %}">Zapoznaj się z naszymi polisami na dom i mieszkanie</a>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <h3 class="text-center mb-3">Historia naszej firmy</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce in dolor quis justo condimentum convallis nec in tortor. Integer sed convallis dolor, at condimentum justo. Vivamus non mi velit. Cras non urna lectus.</p>
+                <p>Nulla fermentum ultricies lacus, eu lacinia leo elementum in. Suspendisse scelerisque velit a odio placerat, a tincidunt mi semper. Fusce sed justo sit amet sem finibus tempus id et elit.</p>
+                <p>Proin et est felis. Nullam tristique congue eros, non auctor urna. In finibus libero ac est mattis, id lacinia justo lobortis. Integer rhoncus mi id malesuada feugiat.</p>
+            </div>
+			<div class="col-md-8 offset-md-2">
+                <h3 class="text-center mb-3">Kontakt:</h3>
+				<ul>
+					<li><a href="#">Facebook</a></li>
+					<li><a href="#">Instagram</a></li>
+					<li><a href="#">Twitter</a></li>
+				</ul>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5">
+            <a href="{% url 'index' %}"Anuluj</a>
+        </div>
+    </div>
+{% endblock %}

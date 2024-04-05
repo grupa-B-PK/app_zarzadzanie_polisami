@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}
+Detale ofert wybranego typu
+{% endblock title %}
+
+{% block content %}
+    <h1>Oto nasze propozycje, wybrane specjalnie dla Ciebie:</h1>
+
+    <ul>
+        {% for policy_type_display, policy_type_value in policy_types %}
+            <li>{{ policy_type_display }}
+                <a href="{% url 'policy_car_create' %}?policy_type={{ policy_type_value }}">Kup ten rodzaj polisy na samochód</a>
+            </li>
+        {% empty %}
+            <li>Brak dostępnych typów polis samochodowych.</li>
+        {% endfor %}
+    </ul>
+
+    <div><a href="{% url 'index' %}">Powrót do strony głównej</a></div>
+{% endblock content %}
