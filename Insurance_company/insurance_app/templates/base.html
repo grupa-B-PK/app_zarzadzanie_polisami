@@ -30,8 +30,11 @@
                     Wybierz polisę
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="{% url 'offer_list' %}">Komunikacyjne</a>
-                    <a class="dropdown-item" href="{% url 'offer_list' %}">Nieruchomości</a>
+
+
+                    <a class="dropdown-item" href="{% url 'offer_detail' %}?car">Samochód</a>
+                    <a class="dropdown-item" href="{% url 'offer_detail' %}?house">Dom i mieszkanie</a>
+
                 </div>
             </li>
             <li class="nav-item">

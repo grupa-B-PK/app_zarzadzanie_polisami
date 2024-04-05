@@ -1,24 +1,33 @@
 {% extends "base.html" %}
 
 {% block title %}
-Detale wybranej oferty
+Detale ofert wybranego typu
 {% endblock title %}
 
 {% block content %}
     <h1>Oto oferta, która może cię zainteresować:</h1>
+
     {% if car_insurance %}
-        <p>Nazwa: {{ car_insurance.policy_name }}</p>
-        <p>Opis: {{ car_insurance.policy_description}}</p>
-        <p>Przykładowa cena: {{ car_insurance.price }}</p>
-<!--        test of valid status -> move to user offers view as it's created-->
-        <p>Status polisy: {{ car_insurance.valid_to_status }}</p>
-        <a href="{% url 'policy_car_create' %}">Kup polisę na samochód</a>
-    {% elif house_insurance %}
-        <p>Nazwa: {{ house_insurance.policy_name }}</p>
-        <p>Opis: {{ house_insurance.policy_description }}</p>
-        <p>Przykładowa cena: {{ house_insurance.price }}</p>
-        <a href="{% url 'policy_house_create' %}">Kup polisę na dom</a>
-    {% else %}
+        <h2>Oferty samochodowe:</h2>
+        {% for offer in car_insurance %}
+            <p>Nazwa: {{ offer.policy_name }}</p>
+            <p>Opis: {{ offer.policy_description }}</p>
+            <p>Przykładowa cena: {{ offer.price }}</p>
+            <a href="{% url 'policy_car_create' %}">Kup polisę na samochód</a>
+        {% endfor %}
+    {% endif %}
+
+    {% if house_insurance %}
+        <h2>Oferty domowe:</h2>
+        {% for offer in house_insurance %}
+            <p>Nazwa: {{ offer.policy_name }}</p>
+            <p>Opis: {{ offer.policy_description }}</p>
+            <p>Przykładowa cena: {{ offer.price }}</p>
+            <a href="{% url 'index' %}">Kup polisę na dom</a>  <!-- here will be policy_house_create -->
+        {% endfor %}
+    {% endif %}
+
+    {% if not car_insurance and not house_insurance %}
         <p>Chwilowo brak dostępnych ofert.</p>
     {% endif %}
 

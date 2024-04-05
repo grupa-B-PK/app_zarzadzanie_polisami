@@ -4,12 +4,15 @@
 
 {% block content %}
     <h2>Oferujemy następujące polisy:</h2>
+
     <h2>Polisy samochodowe:</h2>
     <ul>
-        {% for car_insurance in car_insurances %}
-            <li>{{ car_insurance.policy_name }}
-                <a href="{% url 'policy_car_create' %}">Kup polisę na samochód</a>
-            </li>
+        {% for offer in offer_list %}
+            {% if offer.car_model %}
+                <li>{{ offer.policy_name }}
+                    <a href="{% url 'policy_car_create' %}">Kup polisę na samochód</a>
+                </li>
+            {% endif %}
         {% empty %}
             <li>Brak dostępnych polis samochodowych.</li>
         {% endfor %}
@@ -17,10 +20,12 @@
 
     <h2>Polisy na dom:</h2>
     <ul>
-        {% for house_insurance in house_insurances %}
-            <li>Produkt: {{ house_insurance.policy_name }}
-                <a href="{% url 'policy_house_create' %}">Kup polisę na dom</a>
-            </li>
+        {% for offer in offer_list %}
+            {% if offer.house_area %}
+                <li>Produkt: {{ offer.policy_name }}
+                    <a href="{% url 'index' %}">Kup polisę na dom</a>  <!-- here will be policy_house_create -->
+                </li>
+            {% endif %}
         {% empty %}
             <li>Brak dostępnych polis na dom.</li>
         {% endfor %}
