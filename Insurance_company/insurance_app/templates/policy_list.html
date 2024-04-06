@@ -1,0 +1,53 @@
+% extends 'base.html' %}
+
+{% block title %}Zakupione polisy{% endblock title %}
+
+{% block content %}
+
+    <h2>Polisy samochodowe:</h2>
+    <ul>
+        {% if car_insurances %}
+            {% for policy in policy_list %}
+                {% if policy|instanceof:"CarInsurance" %}
+                    <li>{{ policy.policy_id }} - {{ policy.car_model }}</li>
+                    <p>Opis: {{ policy.policy_description }}</p>
+                    <p>Aktywna do: {{ policy.valid_to }}</p>
+
+                    <li>
+                        <a href="{% url 'policy_car_detail' policy_id=policy.policy_id %}">Szczegóły</a>
+                    </li>
+
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>Brak polis samochodowych. Skorzystaj z naszych ofert, aby uzyskać ochronę dla swojego pojazdu. </p>
+            <div><a href="{% url 'policy_car_create' %}">Chcę kupić polisę</a></div>
+        {% endif %}
+    </ul>
+    <ul>
+        <h2>Polisy na dom:</h2>
+        {% if house_insurances %}
+            {% for policy in policy_list %}
+                {% if policy|instanceof:"HouseInsurance" %}
+                    <li>
+                        {{ policy.policy_id }} - {{ policy.house_type }}
+
+                    </li>
+                    <p>Opis: {{ policy.policy_description }}</p>
+                    <p>Aktywna do: {{ policy.valid_to }}</p>
+                    <li>
+                        <a href="{% url 'policy_house_detail' policy_id=policy.policy_id %}">Szczegóły</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <p>Brak polis mieszkaniowych. Skorzystaj z naszych ofert, aby uzyskać ochronę dla swojego domu lub
+                mieszkania.</p>
+            <div><a href="{% url 'policy_house_create' %}">Chcę kupić polisę</a></div>
+        {% endif %}
+
+
+    </ul>
+    <br>
+    <div><a href="{% url 'index' %}">Powrót do strony głównej</a></div>
+{% endblock %}

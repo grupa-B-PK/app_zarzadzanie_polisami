@@ -31,6 +31,17 @@ class OfferHouseView(View):
         return render(request, 'offer_house.html', ctx)
 
 
+def policy_list(request):
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        car_insurances = CarInsurance.objects.filter(customer=customer)
+        house_insurances = HouseInsurance.objects.filter(customer=customer)
+        return render(request, 'policy_list.html',
+                      {'car_insurances': car_insurances, 'house_insurances': house_insurances})
+    else:
+        return redirect('login')
+
+
 def policy_car_create(request):
     car_policy_form = CarInsuranceModelForm()
     if request.method == "GET":

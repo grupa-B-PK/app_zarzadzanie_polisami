@@ -1,6 +1,9 @@
+from django.contrib.auth.models import User
 from django.db import models
 from _datetime import datetime, date
 import uuid
+
+from accounts.models import Customer
 
 
 # time functions
@@ -38,8 +41,13 @@ class CarInsurance(models.Model):
         "OC + AC": "Ubezpieczenie OC pokrywa szkody osoby przez nas poszkodowanej, z kolei odszkodowanie z tytułu AC likwiduje szkody własne. Zakres ubezpieczenia OC jest identyczny bez względu na zakład ubezpieczeń, zaś w przypadku polisy AC panuje pełna dowolność, dlatego oferta każdej firmy może być zupełnie inna.",
         "PREMIUM": "Ubezpieczenie w Wariancie PREMIUM obejmuje utratę, zniszczenie lub uszkodzenie pojazdu wraz z wyposażeniem podstawowym, w zakresie szkody częściowej i całkowitej powstałej w wyniku zdarzeń nie wyłączonych z zakresu odpowiedzialności. Ubezpieczenie obejmuje parkowanie pojazdu po szkodzie w każdym wariancie."
     }
-
+    POLICY_CATEGORIES = (
+        ("car", "Car Insurance"),
+        ("house", "House Insurance"),
+    )
     # predefined fields
+    policy_category = models.CharField(max_length=10, choices=POLICY_CATEGORIES, default="car")
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     policy_name = models.CharField(max_length=100, unique=True)
     policy_type = models.CharField(max_length=100, choices=POLICY_TYPES, default="Standard OC")
@@ -92,6 +100,7 @@ class HouseInsurance(models.Model):
     }
 
     # predefined fields
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     policy_name = models.CharField(max_length=100, unique=True)
     policy_description = models.TextField(max_length=2000)
