@@ -10,6 +10,25 @@ def current_year():
     return datetime.today().year
 
 
+class PolicyStatus(models.Model):
+    STATUS_CHOICES = {
+        "Active": "Your car is protected - policy is up to date.",
+        "Expired": "Policy is expired"
+    }
+
+
+class CarPolicyType(models.Model):
+    policy_type = models.CharField(primary_key=True, max_length=100)
+    policy_description = models.TextField()
+    type_factor = models.FloatField()
+
+
+class HousePolicyType(models.Model):
+    policy_type = models.CharField(primary_key=True, max_length=100)
+    policy_description = models.TextField()
+    type_factor = models.FloatField()
+
+
 class CarInsurance(models.Model):
     FUEL_TYPES = (
         ("Gasoline", "Gasoline"),
@@ -21,29 +40,16 @@ class CarInsurance(models.Model):
     )
 
     AVERAGE_YEAR_MILEAGE = (
-        ("Poniżej 5 tys. km", "Poniżej 5 tys. km"),  # kategorie przebiegu do wykorzystania w kalkulatorze
-        ("do 10 tys. km", "do 10 tys. km"),
-        ("do 20 tys. km", "do 20 tys. km"),
-        ("powyżej 20 tys. km", "powyżej 20 tys. km")
+        (1, "Poniżej 5 tys. km"),  # kategorie przebiegu do wykorzystania w kalkulatorze
+        (2, "do 10 tys. km"),
+        (3, "do 20 tys. km"),
+        (4, "powyżej 20 tys. km")
     )
-
-    POLICY_TYPES = (
-        ("Standard OC", "Standard OC"),
-        ("OC + AC", "OC + AC"),
-        ("PREMIUM", "PREMIUM"),
-    )
-
-    POLICY_DESC = {
-        "Standard OC": "Ubezpieczenie odpowiedzialności cywilnej (OC) samochodu obejmuje przede wszystkim rekompensatę szkód, powstałych w wyniku spowodowania kolizji lub wypadku drogowego. Dotyczy to zarówno szkód osobowych, jak i materialnych. Co istotne, polisa OC przypisana jest do konkretnego samochodu, a nie do jego właściciela.",
-        "OC + AC": "Ubezpieczenie OC pokrywa szkody osoby przez nas poszkodowanej, z kolei odszkodowanie z tytułu AC likwiduje szkody własne. Zakres ubezpieczenia OC jest identyczny bez względu na zakład ubezpieczeń, zaś w przypadku polisy AC panuje pełna dowolność, dlatego oferta każdej firmy może być zupełnie inna.",
-        "PREMIUM": "Ubezpieczenie w Wariancie PREMIUM obejmuje utratę, zniszczenie lub uszkodzenie pojazdu wraz z wyposażeniem podstawowym, w zakresie szkody częściowej i całkowitej powstałej w wyniku zdarzeń nie wyłączonych z zakresu odpowiedzialności. Ubezpieczenie obejmuje parkowanie pojazdu po szkodzie w każdym wariancie."
-    }
 
     # predefined fields
     policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    policy_name = models.CharField(max_length=100, unique=True)
-    policy_type = models.CharField(max_length=100, choices=POLICY_TYPES, default="Standard OC")
-    policy_description = models.TextField()
+    policy_type = models.ForeignKey(CarPolicyType, on_delete=models.CASCADE, blank=False,
+                                    null=False)
     valid_to = models.DateField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
@@ -60,16 +66,11 @@ class CarInsurance(models.Model):
         return f"Nazwa polisy: {self.policy_name}"
 
     @property
-    def valid_to_status(self):
+    def status_validation(self):
         if self.valid_to < date.today():
-            return "Your car is protected - policy is up to date."
+            return PolicyStatus.STATUS_CHOICES["Active"]
         else:
-            return "Policy is expired"
-
-    @property
-    def get_desc(self):
-        description = CarInsurance.POLICY_DESC[CarInsurance.policy_type]
-        return description
+            return PolicyStatus.STATUS_CHOICES["Expired"]
 
 
 class HouseInsurance(models.Model):
@@ -77,12 +78,6 @@ class HouseInsurance(models.Model):
         ("Dom", "Dom"),
         ("Szeregowiec", "Szeregowiec"),
         ("Mieszkanie", "Mieszkanie")
-    )
-
-    POLICY_TYPES = (
-        ("Standard", "Standard"),
-        ("Premium", "Premium"),
-        ("Super Premium", "Super Premium")
     )
 
     POLICY_DESC = {
@@ -93,8 +88,8 @@ class HouseInsurance(models.Model):
 
     # predefined fields
     policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    policy_name = models.CharField(max_length=100, unique=True)
-    policy_description = models.TextField(max_length=2000)
+    policy_type = models.ForeignKey(HousePolicyType, on_delete=models.CASCADE, blank=False,
+                                    null=False)
     valid_to = models.DateField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
