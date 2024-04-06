@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import DateInput
+
 from .models import CarInsurance, HouseInsurance
 
 
@@ -21,6 +23,9 @@ class CarInsuranceModelForm(forms.ModelForm):
             'number_of_owners': 'Liczba współwłaścicieli',
             'driver_under_26': 'Kierowca poniżej 26 roku życia',
         }
+        widgets = {
+            'valid_to': DateInput(attrs={'type': 'date'})
+        }
 
 
 class HouseInsuranceModelForm(forms.ModelForm):
@@ -35,4 +40,7 @@ class HouseInsuranceModelForm(forms.ModelForm):
             'house_area': 'Powierzchnia domu',
             'house_city': 'Miasto',
             'house_value': 'Wartość domu',
+        }
+        widgets = {
+            'valid_to': DateInput(attrs={'type': 'date'})
         }

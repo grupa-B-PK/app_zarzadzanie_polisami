@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Podsumowanie wyceny:
+    Szczegóły polisy:
 {% endblock title %}
 
 {% block content %}
-    <h2> Podsumowanie wyceny:</h2>
+    <h2> Szczegóły polisy:</h2>
     <p>Numer polisy: {{ house_policy.policy_id }}</p>
     <p>Nazwa polisy: {{ house_policy.policy_name }}</p>
     <p>Opis: {{ house_policy.policy_description }}</p>
@@ -18,8 +18,8 @@
     <p>Liczba właścicieli: {{ house_policy.number_of_owners }}</p>
 
 
-    <a href="{% url 'index' %}">Zawrzyj umowę</a>
+    <a href="{% url 'policy_list' %}">Sprawdż listę zawartych polis</a>
 
 
-    <div><a href="{% url 'index' %}">Anuluj</a></div>
+    <div><a href="{% url 'index' %}">Powrót do strony głównej</a></div>
 {% endblock content %}

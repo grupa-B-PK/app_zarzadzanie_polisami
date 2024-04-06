@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Podsumowanie wyceny:
+{% endblock title %}
+
+{% block content %}
+    <h2> Podsumowanie wyceny:</h2>
+    <form action="{% url 'policy_house_confirm' %}" method="post">
+        {% csrf_token %}
+        {{ house_policy_form.as_p }}
+        <input type="submit" value="Zawrzyj umowę">
+    </form>
+
+    <div><a href="{% url 'index' %}">Anuluj</a></div>
+{% endblock content %}

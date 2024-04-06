@@ -46,7 +46,7 @@ class CarInsurance(models.Model):
         ("house", "House Insurance"),
     )
     # predefined fields
-    policy_category = models.CharField(max_length=10, choices=POLICY_CATEGORIES, default="car")
+
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     policy_name = models.CharField(max_length=100, unique=True)
@@ -59,7 +59,7 @@ class CarInsurance(models.Model):
     production_year = models.PositiveIntegerField(default=current_year())
     fuel_type = models.CharField(max_length=100, choices=FUEL_TYPES)
     mileage = models.PositiveIntegerField()
-    average_year_mileage = models.PositiveSmallIntegerField(choices=AVERAGE_YEAR_MILEAGE)
+    average_year_mileage = models.CharField(choices=AVERAGE_YEAR_MILEAGE, max_length=100)
     is_rented = models.BooleanField(default=False)
     number_of_owners = models.PositiveSmallIntegerField()
     driver_under_26 = models.BooleanField(default=False)
