@@ -43,11 +43,11 @@ def mileage_factor(mileage):
     return mileage_factor
 
 def avg_mil_factor(average_year_mileage):
-    if average_year_mileage == "Poniżej 5 tys. km":
+    if average_year_mileage == 1:
         return 0.05
-    if average_year_mileage == "do 10 tys. km":
+    if average_year_mileage == 2:
         return 0.07
-    if average_year_mileage == "do 20 tys. km":
+    if average_year_mileage == 3:
         return 0.09
     else:
         return 0.1
