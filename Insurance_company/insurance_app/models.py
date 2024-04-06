@@ -10,6 +10,13 @@ def current_year():
     return datetime.today().year
 
 
+def generate_id():
+    now = datetime.now()
+    str_time = now.strftime('%Y%m%d%H%M%S')
+    id_key = (str_time+str(uuid.uuid4())[:5]).upper()
+    return id_key
+
+
 class PolicyStatus(models.Model):
     STATUS_CHOICES = {
         "Active": "Your car is protected - policy is up to date.",
@@ -47,9 +54,11 @@ class CarInsurance(models.Model):
     )
 
     # predefined fields
-    policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    policy_id = models.CharField(generate_id(), primary_key=True, max_length=19,  editable=False, unique=True,
+                                 null=False,
+                                 blank=False,default=generate_id())
     policy_type = models.ForeignKey(CarPolicyType, on_delete=models.CASCADE, blank=False,
-                                    null=False)
+                                    null=False, default="Standard OC")
     valid_to = models.DateField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
@@ -87,9 +96,11 @@ class HouseInsurance(models.Model):
     }
 
     # predefined fields
-    policy_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+    policy_id = models.CharField(generate_id(), primary_key=True, max_length=19, editable=False, unique=True,
+                                 null=False,
+                                 blank=False, default=generate_id())
     policy_type = models.ForeignKey(HousePolicyType, on_delete=models.CASCADE, blank=False,
-                                    null=False)
+                                    null=False, default="Mieszkanie")
     valid_to = models.DateField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
@@ -101,3 +112,4 @@ class HouseInsurance(models.Model):
 
     def __str__(self):
         return f"Nazwa polisy: {self.policy_name}"
+
