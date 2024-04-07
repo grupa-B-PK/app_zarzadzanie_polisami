@@ -32,11 +32,23 @@ class CarPolicyType(models.Model):
     policy_description = models.TextField()
     type_factor = models.FloatField()
 
+    def __str__(self):
+        return {self.policy_type}
+
+    def __repr__(self):
+        return {self.policy_type}
+
 
 class HousePolicyType(models.Model):
     policy_type = models.CharField(primary_key=True, max_length=100)
     policy_description = models.TextField()
     type_factor = models.FloatField()
+
+    def __str__(self):
+        return {self.policy_type}
+
+    def __repr__(self):
+        return {self.policy_type}
 
 
 class CarInsurance(models.Model):
