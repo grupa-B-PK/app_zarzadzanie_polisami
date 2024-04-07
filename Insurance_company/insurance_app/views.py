@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseNotFound
 
 from .forms import CarInsuranceModelForm, HouseInsuranceModelForm
-from .models import CarInsurance, HouseInsurance
+from .models import CarPolicyType, CarInsurance, HousePolicyType, HouseInsurance
 
 
 class IndexView(TemplateView):
@@ -17,10 +17,9 @@ class MainPageView(TemplateView):
 
 class OfferCarView(View):
     def get(self, request, *args, **kwargs):
-        policy_types = CarInsurance.POLICY_TYPES
-        policy_descriptions = CarInsurance.POLICY_DESC
-        ctx = {'policy_types': policy_types, 'policy_descriptions': policy_descriptions}
-        return render(request, 'offer_car.html', ctx)
+        car_policies = CarPolicyType.objects.all()
+        context = {'car_policies': car_policies}
+        return render(request, 'offer_car.html', context)
 
 
 class OfferHouseView(View):
