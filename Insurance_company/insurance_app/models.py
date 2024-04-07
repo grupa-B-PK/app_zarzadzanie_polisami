@@ -73,6 +73,9 @@ class CarInsurance(models.Model):
     def __str__(self):
         return f"Nazwa polisy: {self.policy_name}"
 
+    def __repr__(self):
+        return f"Nazwa polisy: {self.policy_name}"
+
     @property
     def status_validation(self):
         if self.valid_to < date.today():
@@ -109,6 +112,9 @@ class HouseInsurance(models.Model):
     house_value = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
     def __str__(self):
+        return f"Nazwa polisy: {self.policy_name}"
+
+    def __repr__(self):
         return f"Nazwa polisy: {self.policy_name}"
 
 
