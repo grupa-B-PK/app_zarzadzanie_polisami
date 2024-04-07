@@ -7,6 +7,7 @@ User = settings.AUTH_USER_MODEL
 
 
 class Customer(models.Model):
+
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     pesel = models.CharField(max_length=11, unique=True)
     address = models.CharField(max_length=255)

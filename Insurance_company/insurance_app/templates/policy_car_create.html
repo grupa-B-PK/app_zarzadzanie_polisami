@@ -1,17 +1,18 @@
+
 {% extends "base.html" %}
 
 {% block title %}Wypełnij formularz dla polisy samochodowej, aby sprawdzić składkę{% endblock title %}
 
 {% block content %}
     <div>{{ error }}</div>
-    <h3>Nazwa polisy: {{ car_policy.policy_type }}</h3>
-    <div>Opis: {{ car_policy.policy_description }}</div>
-
-    <form action="{% url 'policy_car_create' %}" method="post">
+    <form action="{% url "policy_car_create" %}" method="post">
         {% csrf_token %}
-        {{ car_policy_form.as_p }}
+        {{ car_policy_form }}
         <input type="submit" value="Przelicz">
+
     </form>
     <br><br>
-    <div><a href="{% url 'main_page' %}">Anuluj</a></div>  {# Poprawienie linku powrotu #}
+    <div><a href="{% url "main_page" %}">Anuluj</a></div>
+
+
 {% endblock content %}

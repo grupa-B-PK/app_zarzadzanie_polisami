@@ -1,4 +1,6 @@
 from django import forms
+from django.forms import DateInput
+
 from .models import CarInsurance, HouseInsurance
 
 
@@ -9,8 +11,8 @@ class CarInsuranceModelForm(forms.ModelForm):
                   "average_year_mileage", "is_rented",
                   "number_of_owners", "driver_under_26"]
         labels = {
-            'policy_type': 'Typ polisy',
-            'valid_to': 'Termin ochorny',
+            "policy_type": "Typ polisy",
+            'valid_to': 'Termin ochrony',
             'car_model': 'Model samochodu',
             'production_year': 'Rok produkcji',
             'fuel_type': 'Typ paliwa',
@@ -20,17 +22,24 @@ class CarInsuranceModelForm(forms.ModelForm):
             'number_of_owners': 'Liczba współwłaścicieli',
             'driver_under_26': 'Kierowca poniżej 26 roku życia',
         }
+        widgets = {
+            'valid_to': DateInput(attrs={'type': 'date'})
+        }
 
 
 class HouseInsuranceModelForm(forms.ModelForm):
     class Meta:
         model = HouseInsurance
-        fields = ["valid_to", "house_type", "number_of_owners", "house_area", "house_city", "house_value"]
+        fields = ["policy_type", "valid_to", "house_type", "number_of_owners", "house_area", "house_city", "house_value"]
         labels = {
-            'valid_to': 'Termin ochorny',
+            "policy_type": "Typ polisy",
+            'valid_to': 'Termin ochrony',
             'house_type': 'Typ domu',
             'number_of_owners': 'Liczba właścicieli',
             'house_area': 'Powierzchnia domu',
             'house_city': 'Miasto',
             'house_value': 'Wartość domu',
+        }
+        widgets = {
+            'valid_to': DateInput(attrs={'type': 'date'})
         }

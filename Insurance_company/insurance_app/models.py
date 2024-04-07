@@ -1,6 +1,9 @@
+from django.contrib.auth.models import User
 from django.db import models
 from _datetime import datetime, date
 import uuid
+
+from accounts.models import Customer
 
 
 # time functions
@@ -13,7 +16,7 @@ def current_year():
 def generate_id():
     now = datetime.now()
     str_time = now.strftime('%Y%m%d%H%M%S')
-    id_key = (str_time+str(uuid.uuid4())[:5]).upper()
+    id_key = (str_time + str(uuid.uuid4())[:5]).upper()
     return id_key
 
 
@@ -54,10 +57,13 @@ class CarInsurance(models.Model):
     )
 
     # predefined fields
+
     policy_id = models.CharField(primary_key=True, max_length=19, editable=False, unique=True,
                                  default=generate_id)
     policy_type = models.ForeignKey(CarPolicyType, on_delete=models.CASCADE)
     # TODO: dodać walidator do daty
+
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     valid_to = models.DateField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
@@ -65,13 +71,13 @@ class CarInsurance(models.Model):
     production_year = models.PositiveIntegerField(default=current_year())
     fuel_type = models.CharField(max_length=100, choices=FUEL_TYPES)
     mileage = models.PositiveIntegerField()
-    average_year_mileage = models.PositiveSmallIntegerField(choices=AVERAGE_YEAR_MILEAGE)
+    average_year_mileage = models.PositiveIntegerField(choices=AVERAGE_YEAR_MILEAGE)
     is_rented = models.BooleanField(default=False)
     number_of_owners = models.PositiveSmallIntegerField()
     driver_under_26 = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"Nazwa polisy: {self.policy_name}"
+        return f"Nazwa polisy: {self.policy_type}"
 
     @property
     def status_validation(self):
@@ -88,17 +94,12 @@ class HouseInsurance(models.Model):
         ("Mieszkanie", "Mieszkanie")
     )
 
-    POLICY_DESC = {
-        "Standard": "Standardowe ubezpieczenie domu zapewnia ochronę na wypadek szkód spowodowanych pożarem, zalaniem, kradzieżą i innymi zdarzeniami określonymi w polisie. Obejmuje ono także koszty naprawy lub odbudowy uszkodzonego budynku oraz jego wyposażenia.",
-        "Premium": "Ubezpieczenie wariantu Premium oferuje rozszerzony zakres ochrony w porównaniu do standardowej polisy. Dodatkowo może obejmować np. zabezpieczenie przed ryzykiem zalania z powodzi, kradzieżą z włamaniem, czy uszkodzeniem wyposażenia ogrodu.",
-        "Super Premium": "Najwyższy wariant ubezpieczenia domu, znany również jako Super Premium, to gwarancja najszerszego zakresu ochrony. Zapewnia on kompleksowe zabezpieczenie na wypadek praktycznie wszystkich ryzyk, włączając w to nawet najbardziej nietypowe sytuacje."
-    }
-
     # predefined fields
+
     policy_id = models.CharField(primary_key=True, max_length=19, editable=False, unique=True,
                                  default=generate_id)
-    policy_type_ref = models.ForeignKey(HousePolicyType, on_delete=models.CASCADE, blank=False,
-                                    null=True, default=None)
+    policy_type = models.ForeignKey(HousePolicyType, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     valid_to = models.DateField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
@@ -109,6 +110,4 @@ class HouseInsurance(models.Model):
     house_value = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
 
     def __str__(self):
-        return f"Nazwa polisy: {self.policy_name}"
-
-
+        return f"Nazwa polisy: {self.policy_type}"
