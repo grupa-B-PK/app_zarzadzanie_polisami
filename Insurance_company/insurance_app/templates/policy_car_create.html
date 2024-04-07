@@ -4,14 +4,14 @@
 
 {% block content %}
     <div>{{ error }}</div>
-    <form action="/insurance_app/policy_car_create/" method="post">
-        {% csrf_token %}
-        {{ car_policy_form }}
-        <input type="submit" value="Przelicz">
+    <h3>Nazwa polisy: {{ car_policy.policy_type }}</h3>
+    <div>Opis: {{ car_policy.policy_description }}</div>
 
+    <form action="{% url 'policy_car_create' %}" method="post">
+        {% csrf_token %}
+        {{ car_policy_form.as_p }}
+        <input type="submit" value="Przelicz">
     </form>
     <br><br>
-    <div><a href="{% url "index" %}">Anuluj</a></div>
-
-
+    <div><a href="{% url 'main_page' %}">Anuluj</a></div>  {# Poprawienie linku powrotu #}
 {% endblock content %}
