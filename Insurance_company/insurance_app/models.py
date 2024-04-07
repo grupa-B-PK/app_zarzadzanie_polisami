@@ -33,10 +33,10 @@ class CarPolicyType(models.Model):
     type_factor = models.FloatField()
 
     def __str__(self):
-        return {self.policy_type}
+        return self.policy_type
 
     def __repr__(self):
-        return {self.policy_type}
+        return self.policy_type
 
 
 class HousePolicyType(models.Model):
@@ -45,10 +45,10 @@ class HousePolicyType(models.Model):
     type_factor = models.FloatField()
 
     def __str__(self):
-        return {self.policy_type}
+        return self.policy_type
 
     def __repr__(self):
-        return {self.policy_type}
+        return self.policy_type
 
 
 class CarInsurance(models.Model):
