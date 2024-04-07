@@ -57,12 +57,13 @@ class CarInsurance(models.Model):
     )
 
     # predefined fields
+
+    policy_id = models.CharField(primary_key=True, max_length=19, editable=False, unique=True,
+                                 default=generate_id)
+    policy_type = models.ForeignKey(CarPolicyType, on_delete=models.CASCADE)
+    # TODO: dodać walidator do daty
+
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    policy_id = models.CharField(generate_id(), primary_key=True, max_length=19, editable=False, unique=True,
-                                 null=False,
-                                 blank=False, default=generate_id())
-    policy_type = models.ForeignKey(CarPolicyType, on_delete=models.CASCADE, blank=False,
-                                    null=False, default=None)
     valid_to = models.DateField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
@@ -101,12 +102,13 @@ class HouseInsurance(models.Model):
 
     # predefined fields
 
+
+    policy_id = models.CharField(primary_key=True, max_length=19, editable=False, unique=True,
+                                 default=generate_id)
+    policy_type_ref = models.ForeignKey(HousePolicyType, on_delete=models.CASCADE, blank=False,
+                                    null=True, default=None)
+
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    policy_id = models.CharField(generate_id(), primary_key=True, max_length=19, editable=False, unique=True,
-                                 null=False,
-                                 blank=False, default=generate_id())
-    policy_type = models.ForeignKey(HousePolicyType, on_delete=models.CASCADE, blank=False,
-                                    null=False, default=None)
     valid_to = models.DateField()
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
@@ -118,3 +120,4 @@ class HouseInsurance(models.Model):
 
     def __str__(self):
         return f"Nazwa polisy: {self.policy_name}"
+

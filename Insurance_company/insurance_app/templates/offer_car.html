@@ -7,15 +7,24 @@ Detale ofert polis na samochód
 {% block content %}
     <h1>Oto nasze propozycje polis na samochód, wybrane specjalnie dla Ciebie:</h1>
 
-{#    <ul>#}
-{#        {% for policy_type, policy_description in policy_descriptions.items %}#}
-{#            <li>#}
-{#            <div>Nazwa polisy: {{ policy_type }}</div>#}
-{#            <div>Opis: {{ policy_description }}</div>#}
-{#            <div><a href="{% url 'policy_car_create' %}">Kup ten wariant polisy na samochód</a></div>#}
-{#            <div><hr></div></li>#}
-{#        {% endfor %}#}
-{#    </ul>#}
+    <ul>
+        {% for car_policy in car_policies %}
+            <li>
+                <div>Nazwa polisy: {{ car_policy.policy_type }}</div>
+                <div>Opis: {{ car_policy.policy_description }}</div>
+                <div>
+                    <form action="{% url 'policy_car_create' %}" method="GET">
+                        <input type="hidden" name="policy_type" value="{{ car_policy.policy_type }}">
+                        <input type="submit" value="Kup ten wariant polisy na samochód">
+                    </form>
+                    <div><hr></div>
+                </div>
+            </li>
+        {% empty %}
+            <li>Brak dostępnych polis samochodowych.</li>
+        {% endfor %}
+    </ul>
+>>>>>>> main
 
     <div><a href="{% url 'main_page' %}">Powrót do strony głównej</a></div>
 {% endblock content %}
