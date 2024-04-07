@@ -7,7 +7,7 @@ from .models import CarInsurance, HouseInsurance
 class CarInsuranceModelForm(forms.ModelForm):
     class Meta:
         model = CarInsurance
-        fields = [ "valid_to", "car_model", "production_year", "fuel_type", "mileage",
+        fields = ["valid_to", "car_model", "production_year", "fuel_type", "mileage",
                   "average_year_mileage", "is_rented",
                   "number_of_owners", "driver_under_26"]
         labels = {

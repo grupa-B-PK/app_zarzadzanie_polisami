@@ -25,10 +25,9 @@ class OfferCarView(View):
 
 class OfferHouseView(View):
     def get(self, request, *args, **kwargs):
-        policy_types = HouseInsurance.POLICY_TYPES
-        policy_descriptions = HouseInsurance.POLICY_DESC
-        ctx = {'policy_types': policy_types, 'policy_descriptions': policy_descriptions}
-        return render(request, 'offer_house.html', ctx)
+        house_policies = HousePolicyType.objects.all()
+        context = {'house_policies': house_policies}
+        return render(request, 'offer_house.html', context)
 
 
 @login_required
@@ -48,7 +47,7 @@ def policy_car_create(request):
     if request.method == "POST":
         car_policy_form = CarInsuranceModelForm(request.POST)
         if car_policy_form.is_valid():
-            request.session['car_policy_data'] = request.POST.dict()  # Zapisanie danych formularza w sesji
+            request.session['car_policy_data'] = request.POST.dict()
             return redirect("policy_car_confirm")
     else:
         car_policy_form = CarInsuranceModelForm()
@@ -59,13 +58,14 @@ def policy_car_create(request):
 def policy_car_confirm(request):
     if 'car_policy_data' in request.session:
         car_policy_data = request.session['car_policy_data']
+
         car_policy_form = CarInsuranceModelForm(car_policy_data)
         if request.method == "POST":
             if car_policy_form.is_valid():
                 car_policy = car_policy_form.save(commit=False)
                 car_policy.customer = request.user.customer
                 car_policy.save()
-                del request.session['car_policy_data']  # Usunięcie danych formularza z sesji po zapisie
+                del request.session['car_policy_data']
                 return redirect("policy_car_detail", policy_id=car_policy.policy_id)
         return render(request, "policy_car_confirm.html", {"car_policy_form": car_policy_form})
     else:
@@ -91,7 +91,7 @@ def policy_house_create(request):
     if request.method == "POST":
         house_policy_form = HouseInsuranceModelForm(request.POST)
         if house_policy_form.is_valid():
-            request.session['house_policy_data'] = request.POST.dict()  # Zapisanie danych formularza w sesji
+            request.session['house_policy_data'] = request.POST.dict()
             return redirect("policy_house_confirm")
     else:
         house_policy_form = HouseInsuranceModelForm()
@@ -107,7 +107,7 @@ def policy_house_confirm(request):
                 house_policy = house_policy_form.save(commit=False)
                 house_policy.customer = request.user.customer
                 house_policy.save()
-                del request.session['house_policy_data']  # Usunięcie danych formularza z sesji po zapisie
+                del request.session['house_policy_data']
                 return redirect("policy_house_detail", policy_id=house_policy.policy_id)
         return render(request, "policy_house_confirm.html", {"house_policy_form": house_policy_form})
     else:
