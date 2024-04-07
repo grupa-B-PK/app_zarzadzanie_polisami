@@ -7,8 +7,6 @@
 {% block content %}
     <h2> Szczegóły polisy:</h2>
     <p>Numer polisy: {{ car_policy.policy_id }}</p>
-    <p>Nazwa polisy: {{ car_policy.policy_name }}</p>
-    <p>Opis: {{ car_policy.policy_description }}</p>
     <p>Termin obowiązywania ochorny: {{ car_policy.valid_to }}</p>
     <p>Wysokość składki: "Do uzupełnienia przy ustaleniu logiki do przeliczenia składki" </p>
     <p>Model samochodu: {{ car_policy.car_model }}</p>
@@ -17,7 +15,7 @@
     <p>Przebieg: {{ car_policy.mileage }}</p>
     <p>Czy wynajmowane: {{ car_policy.is_rented }}</p>
     <p>Liczba właścicieli: {{ car_policy.number_of_owners }}</p>
-    <p>Kierowca poniżej 26 roku życia: {{ car_policy.driver_under_26 }}</p>
+
 
     <a href="{% url 'policy_list' %}">Sprawdż listę zawartych polis</a>
 

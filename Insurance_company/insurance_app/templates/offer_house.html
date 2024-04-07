@@ -7,15 +7,15 @@ Detale ofert polis na dom
 {% block content %}
     <h1>Oto nasze propozycje polis na dom, wybrane specjalnie dla Ciebie:</h1>
 
-    <ul>
-        {% for policy_type, policy_description in policy_descriptions.items %}
-            <li>
-            <div>Nazwa polisy: {{ policy_type }}</div>
-            <div>Opis: {{ policy_description }}</div>
-            <div><a href="{% url 'policy_house_create' %}">Kup ten wariant polisy na dom</a></div></li>
-            <div><hr></div></li>
-        {% endfor %}
-    </ul>
+{#    <ul>#}
+{#        {% for policy_type, policy_description in policy_descriptions.items %}#}
+{#            <li>#}
+{#            <div>Nazwa polisy: {{ policy_type }}</div>#}
+{#            <div>Opis: {{ policy_description }}</div>#}
+{#            <div><a href="{% url 'policy_house_create' %}">Kup ten wariant polisy na dom</a></div></li>#}
+{#            <div><hr></div></li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
 
     <div><a href="{% url 'main_page' %}">Powrót do strony głównej</a></div>
 {% endblock content %}
