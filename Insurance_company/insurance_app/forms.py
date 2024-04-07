@@ -7,11 +7,12 @@ from .models import CarInsurance, HouseInsurance
 class CarInsuranceModelForm(forms.ModelForm):
     class Meta:
         model = CarInsurance
-        fields = ["valid_to", "car_model", "production_year", "fuel_type", "mileage",
+        fields = ["policy_type", "valid_to", "car_model", "production_year", "fuel_type", "mileage",
                   "average_year_mileage", "is_rented",
                   "number_of_owners", "driver_under_26"]
         labels = {
-            'valid_to': 'Termin ochorny',
+            "policy_type": "Typ polisy",
+            'valid_to': 'Termin ochrony',
             'car_model': 'Model samochodu',
             'production_year': 'Rok produkcji',
             'fuel_type': 'Typ paliwa',
@@ -29,9 +30,10 @@ class CarInsuranceModelForm(forms.ModelForm):
 class HouseInsuranceModelForm(forms.ModelForm):
     class Meta:
         model = HouseInsurance
-        fields = ["valid_to", "house_type", "number_of_owners", "house_area", "house_city", "house_value"]
+        fields = ["policy_type", "valid_to", "house_type", "number_of_owners", "house_area", "house_city", "house_value"]
         labels = {
-            'valid_to': 'Termin ochorny',
+            "policy_type": "Typ polisy",
+            'valid_to': 'Termin ochrony',
             'house_type': 'Typ domu',
             'number_of_owners': 'Liczba właścicieli',
             'house_area': 'Powierzchnia domu',

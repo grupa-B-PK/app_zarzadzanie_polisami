@@ -12,19 +12,22 @@ Detale ofert polis na samochód
             <li>
                 <div>Nazwa polisy: {{ car_policy.policy_type }}</div>
                 <div>Opis: {{ car_policy.policy_description }}</div>
-                <div>
-                    <form action="{% url 'policy_car_create' %}" method="GET">
-                        <input type="hidden" name="policy_type" value="{{ car_policy.policy_type }}">
-                        <input type="submit" value="Kup ten wariant polisy na samochód">
-                    </form>
-                    <div><hr></div>
-                </div>
             </li>
         {% empty %}
             <li>Brak dostępnych polis samochodowych.</li>
         {% endfor %}
     </ul>
 
+    {% if car_policies %}
+        <div>Czy któraś z powyższych opcji Cię zainteresowała?</div>
+        <div>W takim razie</div>
+        <div>
+            <form action="{% url 'policy_car_create' %}" method="GET">
+                <input type="submit" value="sprawdź szczegóły">
+            </form>
+            <div><hr></div>
+        </div>
+    {% endif %}
 
     <div><a href="{% url 'main_page' %}">Powrót do strony głównej</a></div>
 {% endblock content %}

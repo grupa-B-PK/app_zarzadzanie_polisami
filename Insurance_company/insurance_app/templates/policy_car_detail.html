@@ -7,7 +7,9 @@
 {% block content %}
     <h2> Szczegóły polisy:</h2>
     <p>Numer polisy: {{ car_policy.policy_id }}</p>
-    <p>Termin obowiązywania ochorny: {{ car_policy.valid_to }}</p>
+    <p>Typ polisy: {{ car_policy.policy_type }}</p>
+    <p>Opis: {{ car_policy.policy_description }}</p>
+    <p>Termin obowiązywania ochrony: {{ car_policy.valid_to }}</p>
     <p>Wysokość składki: "Do uzupełnienia przy ustaleniu logiki do przeliczenia składki" </p>
     <p>Model samochodu: {{ car_policy.car_model }}</p>
     <p>Rok produkcji: {{ car_policy.production_year }}</p>
