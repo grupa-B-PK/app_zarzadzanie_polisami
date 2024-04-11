@@ -1,20 +1,21 @@
 from django import forms
 from django.forms import DateInput
 
-from .models import CarInsurance, HouseInsurance
+from .models import CarInsurance, HouseInsurance, CarPolicyType, HousePolicyType
 from utils.validators import validate_future_date, validate_past_date
 
 
 class CarInsuranceModelForm(forms.ModelForm):
     class Meta:
         model = CarInsurance
-        fields = ["policy_type", "valid_to", "car_model", "production_year", "fuel_type", "mileage",
+        fields = ["policy_type", "valid_to", "car_mark_model", "production_year", "fuel_type",
+                  "mileage",
                   "average_year_mileage", "is_rented",
                   "number_of_owners", "driver_under_26"]
         labels = {
             "policy_type": "Typ polisy",
             'valid_to': 'Termin ochrony',
-            'car_model': 'Model samochodu',
+            'car_mark_model': 'Marka i model samochodu',
             'production_year': 'Rok produkcji',
             'fuel_type': 'Typ paliwa',
             'mileage': 'Przebieg',
@@ -27,6 +28,17 @@ class CarInsuranceModelForm(forms.ModelForm):
             'valid_to': DateInput(attrs={'type': 'date'})
         }
 
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['policy_type'].queryset = CarPolicyType.objects.all()
+
+        def clean(self):
+            cleaned_data = super().clean()
+            policy_type = cleaned_data.get("policy_type")
+            if policy_type:
+                cleaned_data["policy_description"] = policy_type.policy_description
+            return cleaned_data
+
     def clean_valid_to(self):
         valid_to = self.cleaned_data.get('valid_to')
         validate_future_date(valid_to)
@@ -37,10 +49,12 @@ class CarInsuranceModelForm(forms.ModelForm):
         validate_past_date(production_year)
         return production_year
 
+
 class HouseInsuranceModelForm(forms.ModelForm):
     class Meta:
         model = HouseInsurance
-        fields = ["policy_type", "valid_to", "house_type", "number_of_owners", "house_area", "house_city", "house_value"]
+        fields = ["policy_type", "valid_to", "house_type", "number_of_owners", "house_area",
+                  "house_city", "house_value"]
         labels = {
             "policy_type": "Typ polisy",
             'valid_to': 'Termin ochrony',
@@ -53,3 +67,14 @@ class HouseInsuranceModelForm(forms.ModelForm):
         widgets = {
             'valid_to': DateInput(attrs={'type': 'date'})
         }
+
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['policy_type'].queryset = HousePolicyType.objects.all()
+
+        def clean(self):
+            cleaned_data = super().clean()
+            policy_type = cleaned_data.get("policy_type")
+            if policy_type:
+                cleaned_data["policy_description"] = policy_type.policy_description
+            return cleaned_data

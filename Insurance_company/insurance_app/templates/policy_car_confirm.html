@@ -6,6 +6,7 @@
 
 {% block content %}
     <h2> Podsumowanie wyceny:</h2>
+    <p>Szczegółowy opis polisy: {{ policy_description }}</p>
     <form action="{% url 'policy_car_confirm' %}" method="post">
         {% csrf_token %}
         {{ car_policy_form.as_p }}
