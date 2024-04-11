@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'insurance_app',
     'accounts',
+    'utils',
 ]
 
 MIDDLEWARE = [

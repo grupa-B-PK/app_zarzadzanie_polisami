@@ -2,6 +2,7 @@ from django import forms
 from django.forms import DateInput
 
 from .models import CarInsurance, HouseInsurance
+from utils.validators import validate_future_date, validate_past_date
 
 
 class CarInsuranceModelForm(forms.ModelForm):
@@ -26,6 +27,15 @@ class CarInsuranceModelForm(forms.ModelForm):
             'valid_to': DateInput(attrs={'type': 'date'})
         }
 
+    def clean_valid_to(self):
+        valid_to = self.cleaned_data.get('valid_to')
+        validate_future_date(valid_to)
+        return valid_to
+
+    def clean_production_year(self):
+        production_year = self.cleaned_data.get('production_year')
+        validate_past_date(production_year)
+        return production_year
 
 class HouseInsuranceModelForm(forms.ModelForm):
     class Meta:

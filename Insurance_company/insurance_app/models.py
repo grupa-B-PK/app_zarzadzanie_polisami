@@ -4,7 +4,7 @@ from _datetime import datetime, date
 import uuid
 
 from accounts.models import Customer
-
+from utils.validators import validate_future_date, validate_past_date
 
 # time functions
 
@@ -73,14 +73,12 @@ class CarInsurance(models.Model):
     policy_id = models.CharField(primary_key=True, max_length=19, editable=False, unique=True,
                                  default=generate_id)
     policy_type = models.ForeignKey(CarPolicyType, on_delete=models.CASCADE)
-    # TODO: dodać walidator do daty
-
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    valid_to = models.DateField()
+    valid_to = models.DateField(validators=[validate_future_date])
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
     car_model = models.CharField(max_length=100)
-    production_year = models.PositiveIntegerField(default=current_year())
+    production_year = models.PositiveIntegerField(default=current_year(), validators=[validate_past_date])
     fuel_type = models.CharField(max_length=100, choices=FUEL_TYPES)
     mileage = models.PositiveIntegerField()
     average_year_mileage = models.PositiveIntegerField(choices=AVERAGE_YEAR_MILEAGE)
