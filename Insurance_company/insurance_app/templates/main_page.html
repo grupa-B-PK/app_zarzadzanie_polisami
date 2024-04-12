@@ -32,7 +32,7 @@
                       <div class="card-body">
                         <h5 class="card-title">Polisy majątkowe</h5>
                         <p class="card-text">Zapoznaj się z naszymi polisami na dom i mieszkanie</p>
-                        <a href="{% url 'index' %}" class="btn btn-primary">Ubezpiecz nieruchomość</a>
+                        <a href="{% url 'offer_house' %}" class="btn btn-primary">Ubezpiecz nieruchomość</a>
                       </div>
                 </div>
 
@@ -70,8 +70,9 @@
     </div>
 
 
-<div class="text-center mt-5">
-            <a href="{% url 'index' %}">Powrót do strony powitalnej</a>
+<div style="text-align:center;position:fixed;bottom:3rem;left:auto;right:auto;width:100%;">
+    <div class="btn btn-light"><a style="text-decoration:none;" href="{% url 'index' %}">Powrót do strony głównej</a>
+    </div>
 </div>
 
 {% endblock %}
