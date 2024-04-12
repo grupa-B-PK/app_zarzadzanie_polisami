@@ -67,7 +67,11 @@ def policy_car_confirm(request):
                 car_policy.save()
                 del request.session['car_policy_data']
                 return redirect("policy_car_detail", policy_id=car_policy.policy_id)
-        return render(request, "policy_car_confirm.html", {"car_policy_form": car_policy_form})
+        policy_type_id = car_policy_data.get("policy_type")
+        policy_description = CarPolicyType.objects.get(pk=policy_type_id).policy_description
+
+        return render(request, "policy_car_confirm.html",
+                      {"car_policy_form": car_policy_form, "policy_description": policy_description})
     else:
         return redirect("policy_car_create")
 
@@ -77,10 +81,12 @@ def policy_car_detail(request, policy_id):
     try:
 
         car_policy = CarInsurance.objects.get(policy_id=policy_id)
+        policy_description = car_policy.policy_type.policy_description
     except CarInsurance.DoesNotExist:
         return HttpResponseNotFound("Page Not Found")
     ctx = {
         "car_policy": car_policy,
+        "policy_description": policy_description,
     }
 
     return render(request, "policy_car_detail.html", context=ctx)
@@ -109,7 +115,9 @@ def policy_house_confirm(request):
                 house_policy.save()
                 del request.session['house_policy_data']
                 return redirect("policy_house_detail", policy_id=house_policy.policy_id)
-        return render(request, "policy_house_confirm.html", {"house_policy_form": house_policy_form})
+        policy_type_id = house_policy_data.get("policy_type")
+        policy_description = HousePolicyType.objects.get(pk=policy_type_id).policy_description
+        return render(request, "policy_house_confirm.html", {"house_policy_form": house_policy_form, "policy_description": policy_description})
     else:
         return redirect("policy_house_create")
 
@@ -118,10 +126,12 @@ def policy_house_confirm(request):
 def policy_house_detail(request, policy_id):
     try:
         house_policy = HouseInsurance.objects.get(policy_id=policy_id)
+        policy_description = house_policy.policy_type.policy_description
     except CarInsurance.DoesNotExist:
         return HttpResponseNotFound("Page Not Found")
     ctx = {
         "house_policy": house_policy,
+        "policy_description": policy_description
     }
 
     return render(request, "policy_house_detail.html", context=ctx)
