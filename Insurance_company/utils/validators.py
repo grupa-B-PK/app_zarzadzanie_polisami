@@ -22,11 +22,10 @@ def validate_pesel(pesel):
     if all(val == str(pesel)[0] for val in str(pesel)[1:]):
         raise ValidationError('This is not a correct PESEL number.')
 
-def validate_pesel_unique(value):
+def validate_pesel_unique(pesel):
     from accounts.models import Customer
-    if Customer.objects.filter(pesel=value).exists():
+    if Customer.objects.filter(pesel=pesel).exists():
         raise ValidationError('This PESEL is already registered.')
-
 
 def validate_future_date(value):
     if value <= datetime.today().date():
