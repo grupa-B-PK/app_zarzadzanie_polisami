@@ -1,25 +1,83 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Szczegóły polisy:
+Szczegóły polisy:
 {% endblock title %}
 
 {% block content %}
-    <h2> Szczegóły polisy:</h2>
-    <p>Numer polisy: {{ house_policy.policy_id }}</p>
-    <p>Typ polisy: {{ house_policy.policy_type }}</p>
-    <p>Szczegółowy opis polisy: {{ policy_description }}</p>
-    <p>Termin obowiązywania ochrony: {{ house_policy.valid_to }}</p>
-    <p>Wysokość składki: "Do uzupełnienia przy ustaleniu logiki do przeliczenia składki" </p>
-    <p>Typ domu: {{ house_policy.house_type }}</p>
-    <p>Powierzchnia domu: {{ house_policy.house_area }}m²</p>
-    <p>Miasto: {{ house_policy.house_city }}</p>
-    <p>Wartość domu: {{ house_policy.house_value }}</p>
-    <p>Liczba właścicieli: {{ house_policy.number_of_owners }}</p>
+
+<div style="width:60%;margin-top:3rem;margin-left:auto;margin-right:auto;">
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Wymiar</th>
+            <th scope="col">Wartość</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Numer polisy:</td>
+            <td>{{ house_policy.policy_id }}</td>
+        </tr>
+        <tr>
+            <td>Typ polisy:</td>
+            <td>{{ house_policy.policy_type }}</td>
+        </tr>
+        <tr>
+            <td>Szczegółowy opis polisy:</td>
+            <td>{{ policy_description }}</td>
+        </tr>
+         <tr>
+            <td>Termin obowiązywania ochrony:</td>
+            <td>{{ house_policy.valid_to }}</td>
+        </tr>
+        <tr>
+            <td>Wysokość składki:</td>
+            <td>"Do uzupełnienia przy
+            ustaleniu logiki do przeliczenia składki"</td>
+        </tr>
+        <tr>
+            <td>Typ domu:</td>
+            <td>{{ house_policy.house_type }}</td>
+        </tr>
+        <tr>
+            <td>Powierzchnia domu:</td>
+            <td>{{ house_policy.house_area }}m²</td>
+        </tr>
+        <tr>
+            <td>Miasto:</td>
+            <td>{{ house_policy.house_city }}</td>
+        </tr>
+        <tr>
+            <td>Wartość domu:</td>
+            <td>{{ house_policy.house_value }}PLN</td>
+        </tr>
+        <tr>
+            <td>Liczba właścicieli:</td>
+            <td>{{ house_policy.number_of_owners }}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 
-    <a href="{% url 'policy_list' %}">Sprawdż listę zawartych polis</a>
 
 
-    <div><a href="{% url 'index' %}">Powrót do strony głównej</a></div>
+
+
+
+
+
+
+<div style="text-align:center;">
+    <button class="btn btn-info" style="margin-top: 2rem;">
+        <a href="{% url 'policy_list' %}"
+           style="text-decoration:none;color:white;">Sprawdź listę zawartych polis</a>
+    </button>
+</div>
+
+<div style="text-align:center;position:fixed;bottom:3rem;left:auto;right:auto;width:100%;">
+    <div class="btn btn-light"><a style="text-decoration:none;" href="{% url 'main_page' %}">Powrót do strony głównej</a>
+    </div>
+</div>
 {% endblock content %}

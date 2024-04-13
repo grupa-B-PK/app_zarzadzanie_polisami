@@ -16,7 +16,7 @@
                     data-bs-target="#flush-collapse{{forloop.counter}}" aria-expanded="false"
                     aria-controls="flush-collapse{{forloop.counter}}"><strong>
                 {{ policy.policy_type }}<span style="margin-right: 4rem;"></span> dla pojazdu:
-                {{ policy.car_model }}</strong>
+                {{ policy.car_mark_model }}</strong>
             </button>
         </h2>
         <div id="flush-collapse{{forloop.counter}}"
@@ -24,7 +24,7 @@
              data-bs-parent="#accordionFlushExample">
             <div class="accordion-body">
                 <p>Numer polisy: {{ policy.policy_id }}</p><br>
-                <p>Dla pojazdu: {{ policy.car_model }}</p><br>
+                <p>Dla pojazdu: {{ policy.car_mark_model }}</p><br>
                 <p>Aktywna do: {{ policy.valid_to }}</p>
                 <button class="btn btn-info" style="margin-top: 1rem;">
                     <a href="{% url 'policy_car_detail' policy_id=policy.policy_id %}"

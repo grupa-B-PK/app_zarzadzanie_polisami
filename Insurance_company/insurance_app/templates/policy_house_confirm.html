@@ -1,16 +1,25 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Podsumowanie wyceny:
+Podsumowanie wyceny:
 {% endblock title %}
 
 {% block content %}
-    <h2> Podsumowanie wyceny:</h2>
-    <form action="{% url 'policy_house_confirm' %}" method="post">
-        {% csrf_token %}
-        {{ house_policy_form.as_p }}
-        <input type="submit" value="Zawrzyj umowę">
-    </form>
+<h2> Podsumowanie wyceny:</h2>
+<p>Szczegółowy opis polisy: {{ policy_description }}</p>
+<form action="{% url 'policy_house_confirm' %}" method="post">
+    {% csrf_token %}
+    {{ house_policy_form.as_p }}
+    <input type="submit" value="Zawrzyj umowę">
+</form>
 
-    <div><a href="{% url 'index' %}">Anuluj</a></div>
+<div><a href="{% url 'policy_house_create' %}">Anuluj</a></div>
+
+
+<div style="text-align:center;position:fixed;bottom:3rem;left:auto;right:auto;width:100%;">
+    <div class="btn btn-light"><a style="text-decoration:none;" href="{% url 'main_page' %}">Powrót do strony
+        głównej</a>
+    </div>
+</div>
+
 {% endblock content %}
