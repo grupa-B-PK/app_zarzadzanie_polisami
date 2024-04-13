@@ -9,12 +9,12 @@ Podsumowanie wyceny:
 <p>Szczegółowy opis polisy: {{ policy_description }}</p>
 <form action="{% url 'policy_house_confirm' %}" method="post">
     {% csrf_token %}
+    <p>Przeliczona cena: {{ calculated_price }}</p>
     {{ house_policy_form.as_p }}
     <input type="submit" value="Zawrzyj umowę">
 </form>
 
 <div><a href="{% url 'policy_house_create' %}">Anuluj</a></div>
-
 
 <div style="text-align:center;position:fixed;bottom:3rem;left:auto;right:auto;width:100%;">
     <div class="btn btn-light"><a style="text-decoration:none;" href="{% url 'main_page' %}">Powrót do strony

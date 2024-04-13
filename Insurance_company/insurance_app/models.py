@@ -5,6 +5,7 @@ import uuid
 from accounts.models import Customer
 from utils.validators import validate_future_date, validate_past_date
 
+
 # time functions
 
 
@@ -17,6 +18,7 @@ def generate_id():
     str_time = now.strftime('%Y%m%d%H%M%S')
     id_key = (str_time + str(uuid.uuid4())[:5]).upper()
     return id_key
+
 
 class CarPolicyFactors(models.Model):
     base = models.FloatField(default=600)
@@ -43,6 +45,13 @@ class CarPolicyFactors(models.Model):
         "Hydrogen": 1.85,
         "Biodiesel": 1.5
     }
+
+class HousePolicyFactors(models.Model):
+    house_dict = {
+        "Dom": 1,
+        "Szeregowiec": 2,
+        "Mieszkanie": 3
+        }
 
 class PolicyStatus(models.Model):
     STATUS_CHOICES = {

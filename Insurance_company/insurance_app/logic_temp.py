@@ -12,20 +12,17 @@ class PolicyPriceCalculator:
 
     def __init__(self, production_year, fuel_factor, fuel_type, mileage, average_year_mileage, is_rented,
                  number_of_owners):
-        try:
-            self.car_policy_factors = CarPolicyFactors.objects.get(id=1)
-        except CarPolicyFactors.DoesNotExist:
-            print("Nie znaleziono obiektu CarPolicyFactors o podanym ID.")
+        self.car_policy_factors = CarPolicyFactors.objects.first()
         self.production_year = production_year
         self.fuel_type = fuel_type
         self.mileage = mileage
         self.average_year_mileage = average_year_mileage
         self.is_rented = is_rented
         self.number_of_owners = number_of_owners
-        # self.age_factor = (current_year() - production_year) * CarPolicyFactors.age_factor
-        self.fuel_factor = CarPolicyFactors.fuel_dict[fuel_type]
+        self.age_factor = (current_year() - production_year) * self.car_policy_factors.age_factor
+        self.fuel_factor = self.car_policy_factors.fuel_dict[fuel_type]
 
-    def mileage_factor(self):
+    def mileage_factor_calc(self):
         if self.mileage < 100000:
             mileage_factor = (self.mileage // 1000) * self.car_policy_factors.mileage_factor_1
         elif self.mileage > 100000 and self.mileage < 250000:
@@ -34,7 +31,7 @@ class PolicyPriceCalculator:
             mileage_factor = (self.mileage // 1000) * self.car_policy_factors.mileage_factor_3
         return mileage_factor
 
-    def avg_mil_factor(self):
+    def avg_mil_factor_calc(self):
         if self.average_year_mileage == 1:
             return self.car_policy_factors.avg_year_mileage_1
         if self.average_year_mileage == 2:
@@ -44,14 +41,14 @@ class PolicyPriceCalculator:
         else:
             return self.car_policy_factors.avg_year_mileage_4
 
-    def rented_factor(self):
+    def rented_factor_calc(self):
         if self.is_rented:
             rented_factor = self.car_policy_factors.rented_factor_2
         else:
             rented_factor = self.car_policy_factors.rented_factor_1
         return rented_factor
 
-    def owners_factor(self):
+    def owners_factor_calc(self):
         if self.number_of_owners > 1:
             owners_factor = self.car_policy_factors.owners_factor_2
         elif self.number_of_owners > 1 and self.number_of_owners <= 3:
@@ -63,5 +60,4 @@ class PolicyPriceCalculator:
         return owners_factor
 
     def calculate_price(self):
-        return (self.car_policy_factors.base * self.fuel_factor * mileage_factor() * avg_mil_factor() *
-                rented_factor() * owners_factor()) #+ self.age_factor
+        return self.car_policy_factors.base * self.fuel_factor * self.mileage_factor_calc() * self.avg_mil_factor_calc() * self.rented_factor_calc() * self.owners_factor_calc() + self.age_factor

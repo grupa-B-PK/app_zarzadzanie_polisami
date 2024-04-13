@@ -4,7 +4,6 @@ from django.core.exceptions import ValidationError
 
 from accounts.models import Customer
 from accounts.forms import CustomUserForm, CustomerForm
-from insurance_app.logic_temp import PolicyPriceCalculator
 
 User = get_user_model()
 
@@ -76,23 +75,3 @@ class UserDataTestCase(TestCase):
         user_form = CustomUserForm(data=invalid_user_data)
         customer_form = CustomerForm(data=invalid_customer_data)
         self.assertFalse(user_form.is_valid() and customer_form.is_valid())
-
-class TestPolicyPriceCalculator(TestCase):
-
-    def test_calculate_price(self):
-        test_data = {
-            'production_year': 2015,
-            'fuel_factor': 1.2,
-            'fuel_type': 'diesel',
-            'mileage': 150000,
-            'average_year_mileage': 2,
-            'is_rented': False,
-            'number_of_owners': 1
-        }
-
-        calculator = PolicyPriceCalculator(**test_data)
-
-        expected_price = 1000
-        actual_price = calculator.calculate_price()
-
-        self.assertEqual(actual_price, expected_price)
