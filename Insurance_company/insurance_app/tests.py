@@ -2,8 +2,9 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from datetime import date, timedelta
 
-from insurance_app.models import CarInsurance, CarPolicyType
+from insurance_app.models import CarPolicyType, CarPolicyFactors
 from insurance_app.forms import CarInsuranceModelForm
+from insurance_app.logic_temp import PolicyPriceCalculator
 from accounts.models import Customer
 
 User = get_user_model()
@@ -51,3 +52,27 @@ class CarDataTestCase(TestCase):
 
         form = CarInsuranceModelForm(data=form_data)
         self.assertFalse(form.is_valid())
+
+class TestPolicyPriceCalculator(TestCase):
+    def setUp(self):
+        self.car_policy_factors = CarPolicyFactors.objects.create()
+
+        test_data = {
+            'production_year': 2015,
+            #'fuel_factor': 1.2,
+            'fuel_type': 'Diesel',
+            'mileage': 150000,
+            'average_year_mileage': 2,
+            'is_rented': False,
+            'number_of_owners': 1
+        }
+
+    def test_set_up(self):
+        test_data = setUp.test_data
+
+        calculator = PolicyPriceCalculator(**test_data)
+
+        expected_price = 1000
+        actual_price = calculator.calculate_price()
+
+        self.assertEqual(actual_price, expected_price)

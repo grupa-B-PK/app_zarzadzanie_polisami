@@ -8,25 +8,6 @@ from utils.validators import validate_future_date, validate_past_date
 
 
 class CarInsuranceModelForm(forms.ModelForm):
-    # helper = FormHelper()
-    # helper.layout = Layout(
-    #     Div(
-    #         Field('policy_type', 'valid_to', 'car_model', 'production_year', 'fuel_type', css_class='col-md-6'),
-    #         Field('mileage', 'average_year_mileage', 'is_rented', 'number_of_owners', 'driver_under_26',
-    #           css_class='col-md-6'),
-    #         css_class = 'row-fluid'
-    #     )
-    # )
-    # def __init__(self, *args, **kwargs):
-    #     super(CarInsuranceModelForm, self).__init__(*args, **kwargs)
-    #     self.helper = FormHelper()
-    #     self.helper.layout = Layout(
-    #         Div(
-    #             Div('policy_type', 'valid_to', 'car_model', 'production_year', 'fuel_type', css_class='col-md-3'),
-    #             Div('mileage', 'average_year_mileage', 'is_rented', 'number_of_owners', 'driver_under_26',css_class='col-md-3'),
-    #             css_class='row-fluid'
-    #         )
-    #     )
     class Meta:
         model = CarInsurance
         fields = ["policy_type", "valid_to", "car_mark_model", "production_year", "fuel_type",
@@ -103,3 +84,13 @@ class HouseInsuranceModelForm(forms.ModelForm):
             if policy_type:
                 cleaned_data["policy_description"] = policy_type.policy_description
             return cleaned_data
+
+        def clean_valid_to(self):
+            valid_to = self.cleaned_data.get('valid_to')
+            validate_future_date(valid_to)
+            return valid_to
+
+        def clean_production_year(self):
+            production_year = self.cleaned_data.get('production_year')
+            validate_past_date(production_year)
+            return production_year
