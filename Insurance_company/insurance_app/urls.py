@@ -1,5 +1,6 @@
 from django.urls import path
 
+
 from insurance_app.views import IndexView, MainPageView, OfferCarView, OfferHouseView, policy_car_create, \
     policy_car_detail, policy_house_detail, policy_house_create, policy_list, policy_car_confirm, policy_house_confirm
 
@@ -16,3 +17,5 @@ urlpatterns = [
     path("policy_house_detail/<str:policy_id>", policy_house_detail, name='policy_house_detail'),
     path('policy_list/', policy_list, name='policy_list'),
 ]
+
+

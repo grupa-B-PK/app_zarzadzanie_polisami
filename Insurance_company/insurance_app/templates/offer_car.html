@@ -5,29 +5,52 @@ Detale ofert polis na samochód
 {% endblock title %}
 
 {% block content %}
-    <h1>Oto nasze propozycje polis na samochód, wybrane specjalnie dla Ciebie:</h1>
+<h2 style="text-align:center;margin-top:3rem;">Oto nasze propozycje polis na samochód, wybrane specjalnie dla
+    Ciebie:</h2>
 
-    <ul>
-        {% for car_policy in car_policies %}
-            <li>
-                <div>Nazwa polisy: {{ car_policy.policy_type }}</div>
-                <div>Opis: {{ car_policy.policy_description }}</div>
-            </li>
-        {% empty %}
-            <li>Brak dostępnych polis samochodowych.</li>
-        {% endfor %}
-    </ul>
 
-    {% if car_policies %}
-        <div>Czy któraś z powyższych opcji Cię zainteresowała?</div>
-        <div>W takim razie</div>
-        <div>
-            <form action="{% url 'policy_car_create' %}" method="GET">
-                <input type="submit" value="sprawdź szczegóły">
-            </form>
-            <div><hr></div>
+<div class="accordion accordion-flush" id="accordionFlushExample"
+     style="width:60%;margin-left:auto;margin-right:auto;margin-top:6rem;margin-bottom: 4rem;">
+    {% for car_policy in car_policies %}
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{forloop.counter}}">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapse{{forloop.counter}}" aria-expanded="false"
+                    aria-controls="flush-collapse{{forloop.counter}}">
+                {{ car_policy.policy_type }}
+            </button>
+        </h2>
+        <div id="flush-collapse{{forloop.counter}}"
+             class="accordion-collapse collapse"
+             data-bs-parent="#accordionFlushExample">
+            <div class="accordion-body">
+                {{ car_policy.policy_description }}
+                <div style="text-align:center;margin-top: 3rem;">
+                    <form action="{% url 'policy_car_create' %}" method="GET">
+                        <input type="submit" class="btn btn-primary" style="width:20rem;" value="Poznaj ofertę">
+                    </form>
+                </div>
+            </div>
         </div>
-    {% endif %}
+    </div>
+    {% empty %}
+    <p class="text-danger" style="text-align:center;margin-top:2rem;">>Brak dostępnych polis samochodowych.</p>
+    {% endfor %}
+</div>
 
-    <div><a href="{% url 'main_page' %}">Powrót do strony głównej</a></div>
+{% if car_policies %}
+<h4 style="text-align:center;">Czy któraś z powyższych opcji Cię zainteresowała?</h4>
+
+    <div style="text-align:center;margin-top: 5rem;">
+        <form action="{% url 'policy_car_create' %}" method="GET">
+            <input type="submit" class="btn btn-primary" style="width:20rem;" value="Dowiedz się więcej!">
+        </form>
+
+    </div>
+{% endif %}
+
+<div style="text-align:center;position:fixed;bottom:3rem;left:auto;right:auto;width:100%;">
+    <div class="btn btn-light"><a style="text-decoration:none;" href="{% url 'main_page' %}">Powrót do strony głównej</a>
+    </div>
+</div>
 {% endblock content %}

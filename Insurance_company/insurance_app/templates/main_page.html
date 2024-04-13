@@ -3,18 +3,54 @@
 {% block title %}Główna strona{% endblock title %}
 
 {% block content %}
-    <div class="container mt-5">
+    <div class="text-center mt-5">
         <h2 class="text-center mb-4">Insurance App:</h2>
         <h3 class="text-center mb-5">Najlepsza firma ubezpieczeniowa: zawsze dla Ciebie i zawsze po Twojej stronie!</h3>
-        
-        <div class="text-center mb-5">
-            <a href="{% url 'offer_car' %}">Zapoznaj się z naszymi polisami na samochód</a>
-        </div>
+    </div>
 
-        <div class="text-center mb-5">
-            <a href="{% url 'index' %}">Zapoznaj się z naszymi polisami na dom i mieszkanie</a>
+<div class="container">
+    <div class="row" style="min-width: 5rem">
+        <div class = "col-md-6">
+                <div class="card text-center">
+<!--                  {% load static %}-->
+<!--                  <img src="{% static 'static/images/car-insurance-logo.png' %}"-->
+<!--                       class="card-img-top"-->
+<!--                       alt="car-insurance-logo">-->
+                  <div class="card-body">
+                    <h5 class="card-title">Polisy samochodowe</h5>
+                    <p class="card-text">Zapoznaj się z naszymi polisami na samochód</p>
+                    <a href="{% url 'offer_car' %}" class="btn btn-primary">Ubezpiecz samochód</a>
+                  </div>
+                </div>
+
         </div>
-        
+        <div class = "col-md-6">
+
+                <div class="card text-center" style="min-width: 5rem">
+<!--                   {% load static %}-->
+<!--                    <img src="{% static 'static/images/car-insurance-logo.png' %}" class="card-img-top" alt="car-insurance-logo">-->
+                      <div class="card-body">
+                        <h5 class="card-title">Polisy majątkowe</h5>
+                        <p class="card-text">Zapoznaj się z naszymi polisami na dom i mieszkanie</p>
+                        <a href="{% url 'offer_house' %}" class="btn btn-primary">Ubezpiecz nieruchomość</a>
+                      </div>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<!--        <div class="text-center mb-5">-->
+<!--            <a href="{% url 'offer_car' %}">Zapoznaj się z naszymi polisami na samochód</a>-->
+<!--        </div>-->
+
+<!--        <div class="text-center mb-5">-->
+<!--            <a href="{% url 'index' %}">Zapoznaj się z naszymi polisami na dom i mieszkanie</a>-->
+<!--        </div>-->
+
+
+
+    <div class="container mt-5">
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <h3 class="text-center mb-3">Historia naszej firmy</h3>
@@ -31,9 +67,12 @@
 				</ul>
             </div>
         </div>
-        
-        <div class="text-center mt-5">
-            <a href="{% url 'index' %}">Powrót do strony powitalnej</a>
-        </div>
     </div>
+
+
+<div style="text-align:center;position:fixed;bottom:3rem;left:auto;right:auto;width:100%;">
+    <div class="btn btn-light"><a style="text-decoration:none;" href="{% url 'index' %}">Powrót do strony głównej</a>
+    </div>
+</div>
+
 {% endblock %}

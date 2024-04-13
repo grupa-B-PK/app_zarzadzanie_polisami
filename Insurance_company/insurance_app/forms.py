@@ -1,11 +1,32 @@
 from django import forms
 from django.forms import DateInput
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Field
 
 from .models import CarInsurance, HouseInsurance, CarPolicyType, HousePolicyType
 from utils.validators import validate_future_date, validate_past_date
 
 
 class CarInsuranceModelForm(forms.ModelForm):
+    # helper = FormHelper()
+    # helper.layout = Layout(
+    #     Div(
+    #         Field('policy_type', 'valid_to', 'car_model', 'production_year', 'fuel_type', css_class='col-md-6'),
+    #         Field('mileage', 'average_year_mileage', 'is_rented', 'number_of_owners', 'driver_under_26',
+    #           css_class='col-md-6'),
+    #         css_class = 'row-fluid'
+    #     )
+    # )
+    # def __init__(self, *args, **kwargs):
+    #     super(CarInsuranceModelForm, self).__init__(*args, **kwargs)
+    #     self.helper = FormHelper()
+    #     self.helper.layout = Layout(
+    #         Div(
+    #             Div('policy_type', 'valid_to', 'car_model', 'production_year', 'fuel_type', css_class='col-md-3'),
+    #             Div('mileage', 'average_year_mileage', 'is_rented', 'number_of_owners', 'driver_under_26',css_class='col-md-3'),
+    #             css_class='row-fluid'
+    #         )
+    #     )
     class Meta:
         model = CarInsurance
         fields = ["policy_type", "valid_to", "car_mark_model", "production_year", "fuel_type",
@@ -50,11 +71,15 @@ class CarInsuranceModelForm(forms.ModelForm):
         return production_year
 
 
+
 class HouseInsuranceModelForm(forms.ModelForm):
     class Meta:
         model = HouseInsurance
+        
+        
         fields = ["policy_type", "valid_to", "house_type", "number_of_owners", "house_area",
                   "house_city", "house_value"]
+
         labels = {
             "policy_type": "Typ polisy",
             'valid_to': 'Termin ochrony',

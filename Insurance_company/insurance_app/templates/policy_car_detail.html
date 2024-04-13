@@ -1,33 +1,87 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Szczegóły polisy:
+Szczegóły polisy:
 {% endblock title %}
 
 {% block content %}
-    <h2> Szczegóły polisy:</h2>
-    <p>Numer polisy: {{ car_policy.policy_id }}</p>
-    <p>Typ polisy: {{ car_policy.policy_type }}</p>
-    <p>Szczegółowy opis polisy: {{ policy_description }}</p>
-    <p>Termin obowiązywania ochrony do: {{ car_policy.valid_to }}</p>
-    <p>Wysokość składki: "Do uzupełnienia przy ustaleniu logiki do przeliczenia składki" </p>
-    <p>Marka i model pojazdu: {{ car_policy.car_mark_model }}</p>
-    <p>Rok produkcji: {{ car_policy.production_year }}</p>
-    <p>Typ paliwa: {{ car_policy.fuel_type }}</p>
-    <p>Przebieg: {{ car_policy.mileage }} km</p>
 
-    <p>Czy wynajmowane:
-        {% if car_policy.is_rented == True %}
-            Tak
-        {% else %}
-            Nie
-        {% endif %}
-    </p>
-    <p>Liczba właścicieli: {{ car_policy.number_of_owners }}</p>
+<div style="width:60%;margin-top:3rem;margin-left:auto;margin-right:auto;">
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Wymiar</th>
+            <th scope="col">Wartość</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Numer polisy:</td>
+            <td>{{car_policy.policy_id }}</td>
+        </tr>
+        <tr>
+            <td>Typ polisy:</td>
+            <td>{{ car_policy.policy_type }}</td>
+        </tr>
+        <tr>
+            <td>Opis:</td>
+            <td>{{ car_policy.policy_description }}</td>
+        </tr>
+         <tr>
+            <td>Termin obowiązywania ochrony:</td>
+            <td>{{car_policy.valid_to }}</td>
+        </tr>
+        <tr>
+            <td>Wysokość składki:</td>
+            <td>"Do uzupełnienia przy
+            ustaleniu logiki do przeliczenia składki"</td>
+        </tr>
+        <tr>
+            <td>Model samochodu:</td>
+            <td>{{ car_policy.car_model }}</td>
+        </tr>
+        <tr>
+            <td>Rok produkcji:</td>
+            <td>{{car_policy.production_year }}</td>
+        </tr>
+        <tr>
+            <td>Typ paliwa:</td>
+            <td>{{ car_policy.fuel_type }}</td>
+        </tr>
+        <tr>
+            <td>Przebieg:</td>
+            <td>{{ car_policy.mileage }}</td>
+        </tr>
+        <tr>
+            <td>Czy wynajmowane:</td>
+            <td>{% if car_policy.is_rented == True %}Tak{% else %}Nie{% endif %}</td>
+        </tr>
+        <tr>
+            <td>Liczba właścicieli:</td>
+            <td>{{car_policy.number_of_owners }}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
 
 
-    <a href="{% url 'policy_list' %}">Sprawdż listę zawartych polis</a>
 
 
-    <div><a href="{% url 'index' %}">Powrót do strony głównej</a></div>
+
+
+
+
+
+
+<div style="text-align:center;">
+    <button class="btn btn-info" style="margin-top: 2rem;">
+        <a href="{% url 'policy_list' %}"
+           style="text-decoration:none;color:white;">Sprawdź listę zawartych polis</a>
+    </button>
+</div>
+
+<div style="text-align:center;position:fixed;bottom:3rem;left:auto;right:auto;width:100%;">
+    <div class="btn btn-light"><a style="text-decoration:none;" href="{% url 'main_page' %}">Powrót do strony głównej</a>
+    </div>
+</div>
 {% endblock content %}

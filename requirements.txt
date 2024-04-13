@@ -1,2 +1,4 @@
 Django==5.0.2
 python-dotenv==1.0.1
+ django-crispy-forms-2.1
+crispy-bootstrap5
