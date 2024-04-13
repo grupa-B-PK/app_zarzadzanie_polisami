@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.db import models
 from _datetime import datetime, date
 import uuid
@@ -19,6 +18,31 @@ def generate_id():
     id_key = (str_time + str(uuid.uuid4())[:5]).upper()
     return id_key
 
+class CarPolicyFactors(models.Model):
+    base = models.FloatField(default=600)
+    age_factor = models.FloatField(default=1)
+    mileage_factor_1 = models.FloatField(default=0.002)
+    mileage_factor_2 = models.FloatField(default=0.0033)
+    mileage_factor_3 = models.FloatField(default=0.0044)
+    avg_year_mileage_1 = models.FloatField(default=0.05)
+    avg_year_mileage_2 = models.FloatField(default=0.07)
+    avg_year_mileage_3 = models.FloatField(default=0.09)
+    avg_year_mileage_4 = models.FloatField(default=0.1)
+    rented_factor_1 = models.FloatField(default=1)
+    rented_factor_2 = models.FloatField(default=3)
+    owners_factor_1 = models.FloatField(default=1)
+    owners_factor_2 = models.FloatField(default=1.2)
+    owners_factor_3 = models.FloatField(default=1.8)
+    owners_factor_4 = models.FloatField(default=2)
+
+    fuel_dict = {
+        "Gasoline": 1,
+        "Diesel": 1.2,
+        "LPG": 1.4,
+        "Electric": 1.7,
+        "Hydrogen": 1.85,
+        "Biodiesel": 1.5
+    }
 
 class PolicyStatus(models.Model):
     STATUS_CHOICES = {
