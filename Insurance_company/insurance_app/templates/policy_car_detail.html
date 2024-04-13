@@ -5,26 +5,8 @@ Szczegóły polisy:
 {% endblock title %}
 
 {% block content %}
+
 <div style="width:60%;margin-top:3rem;margin-left:auto;margin-right:auto;">
-<!--    <h3 style="text-align:center;margin-top:3rem">Szczegóły polisy:</h3>-->
-<!--    <ul class="list-group list-group-flush">-->
-<!--        <li class="list-group-item">Numer polisy:<span style="margin-left:4rem;"></span>{{car_policy.policy_id }}</li>-->
-<!--        <li class="list-group-item">Typ polisy:<span style="margin-left:4rem;"></span> {{ car_policy.policy_type }}</li>-->
-<!--        <li class="list-group-item">Opis:<span style="margin-left:4rem;"></span> {{ car_policy.policy_description }}</li>-->
-<!--        <li class="list-group-item">Termin obowiązywania ochrony:<span style="margin-left:4rem;"></span> {{car_policy.valid_to }} </li>-->
-<!--        <li class="list-group-item">Wysokość składki:<span style="margin-left:4rem;"></span> "Do uzupełnienia przy-->
-<!--            ustaleniu logiki do przeliczenia składki"</li>-->
-<!--        <li class="list-group-item">Model samochodu:<span style="margin-left:4rem;"></span> {{ car_policy.car_model }}</li>-->
-<!--        <li class="list-group-item">Rok produkcji:<span style="margin-left:4rem;"></span> {{car_policy.production_year }}</li>-->
-<!--        <li class="list-group-item">Typ paliwa:<span style="margin-left:4rem;"></span> {{ car_policy.fuel_type }}</li>-->
-<!--        <li class="list-group-item">Przebieg:<span style="margin-left:4rem;"></span> {{ car_policy.mileage }}</li>-->
-<!--        <li class="list-group-item">Czy wynajmowane:<span style="margin-left:4rem;"></span> {{ car_policy.is_rented }}</li>-->
-<!--        <li class="list-group-item">Liczba właścicieli:<span style="margin-left:4rem;"></span> {{car_policy.number_of_owners }}</li>-->
-<!--    </ul>-->
-
-
-
-
 <table class="table table-hover">
     <thead>
         <tr>
@@ -72,7 +54,7 @@ Szczegóły polisy:
         </tr>
         <tr>
             <td>Czy wynajmowane:</td>
-            <td>{{ car_policy.is_rented }}</td>
+            <td>{% if car_policy.is_rented == True %}Tak{% else %}Nie{% endif %}</td>
         </tr>
         <tr>
             <td>Liczba właścicieli:</td>
@@ -80,8 +62,6 @@ Szczegóły polisy:
         </tr>
     </tbody>
 </table>
-
-
 </div>
 
 

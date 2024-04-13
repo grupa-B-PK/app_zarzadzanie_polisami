@@ -4,7 +4,7 @@ from _datetime import datetime, date
 import uuid
 
 from accounts.models import Customer
-
+from utils.validators import validate_future_date, validate_past_date
 
 # time functions
 
@@ -68,19 +68,44 @@ class CarInsurance(models.Model):
         (4, "powyżej 20 tys. km")
     )
 
+    MARK_AND_MODELS = (
+        ("Toyota Corolla", "Toyota Corolla"),
+        ("Skoda Octavia", "Skoda Octavia"),
+        ("Toyota Yaris", "Toyota Yaris"),
+        ("Toyota Yaris Cross:", "Toyota Yaris Cross"),
+        ("Kia Sportage", "Kia Sportage"),
+        ("Toyota C-HR", "Toyota C-HR"),
+        ("Dacia Duster", "Dacia Duster"),
+        ("Toyota RAV4", "Toyota RAV4"),
+        ("Volkswagen T-Roc", "Volkswagen T-Roc"),
+        ("Kia Ceed", "Kia Ceed"),
+        ("BMW X3", "BMW X3"),
+        ("Kia Stonic", "Kia Stonic"),
+        ("Audi A4", "Audi A4"),
+        ("BMW Serii 3", "BMW Serii 3"),
+        ("Audi Q3", "Audi Q3"),
+        ("Audi Q5", "Audi Q5"),
+        ("Lexus NX", "Lexus NX"),
+        ("Suzuki Vitara", "Suzuki Vitara"),
+        ("Volkswagen Golf", "Volkswagen Golf"),
+        ("Nissan Qashqai", "Nissan Qashqai"),
+        ("Audi A3", "Audi A3"),
+        ("Renault Clio", "Renault Clio"),
+        ("Volkswagen Passat", "Volkswagen Passat"),
+        ("Dacia Sandero", "Dacia Sandero"),
+    )
+
     # predefined fields
 
     policy_id = models.CharField(primary_key=True, max_length=19, editable=False, unique=True,
                                  default=generate_id)
     policy_type = models.ForeignKey(CarPolicyType, on_delete=models.CASCADE)
-    # TODO: dodać walidator do daty
-
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    valid_to = models.DateField()
+    valid_to = models.DateField(validators=[validate_future_date])
     price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
     # form fields
-    car_model = models.CharField(max_length=100)
-    production_year = models.PositiveIntegerField(default=current_year())
+    car_mark_model = models.CharField(max_length=100, choices=MARK_AND_MODELS)
+    production_year = models.PositiveIntegerField(default=current_year(), validators=[validate_past_date])
     fuel_type = models.CharField(max_length=100, choices=FUEL_TYPES)
     mileage = models.PositiveIntegerField()
     average_year_mileage = models.PositiveIntegerField(choices=AVERAGE_YEAR_MILEAGE)
