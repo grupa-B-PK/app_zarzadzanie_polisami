@@ -1,15 +1,22 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
-{% block title %}{% endblock title %}
+{% block title %}Zarejestruj się{% endblock title %}
 
 {% block content %}
-<p>Rejestracja</p>
-<form action="{% url 'register' %}" method="post">
-    {% csrf_token %}
-    {{ user_form.as_p }}
-    {{ customer_form.as_p }}
-    <input type="submit" value="Register">
-</form>
-<br><br>
+<h3 style="text-align:center;margin-top:4rem;" class="text-secondary">Utwórz nowego użytkownika</h3>
+<div style="width:40%;margin-left:auto;margin-right:auto;margin-top:3rem;">
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        {{ user_form|crispy }}
+        {{ customer_form.|crispy }}
+        <center>
+            <button style="margin-top:2 rem;width:18rem;" type="submit" value="Register"
+                    class="btn btn-success">Zarejestruj
+                się
+            </button>
+        </center>
+    </form>
+</div>
 
 {% endblock content %}

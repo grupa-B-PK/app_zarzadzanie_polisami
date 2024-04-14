@@ -2,8 +2,12 @@
 
 {% block title %}{% endblock title %}
 
-{% block content %}
-    Zostałeś wylogowany
-    <a href="{% url 'login' %}">Zaloguj się ponownie</a>
 
+{% block content %}
+<h3 style="text-align:center;margin-top:8rem;" class="text-secondary">Zostałeś wylogowany</h3>
+<div style="text-align:center;margin-top:10rem;left:auto;right:auto;width:100%;">
+    <div class="btn btn-success"><a style="text-decoration:none;color:white" href="{% url 'login' %}">Kliknij aby
+        zalogować się ponownie</a>
+    </div>
+</div>
 {% endblock content %}

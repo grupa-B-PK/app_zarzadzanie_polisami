@@ -1,15 +1,19 @@
 {% extends "base.html" %}
+{% load crispy_forms_tags %}
 
-{% block title %}{% endblock title %}
+{% block title %}Logowanie{% endblock title %}
 {% block logout %}{% endblock logout %}
 
 {% block content %}
-<p>Logowanie</p>
+<h3 style="text-align:center;margin-top:4rem;" class="text-secondary">Logowanie</h3>
+<div style="width:40%;margin-left:auto;margin-right:auto;margin-top:3rem;">
 <form action="{% url 'login' %}" method="post">
     {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="OK">
+    {{ form|crispy }}
+    <center><button style="margin-top:2 rem;width:18rem;" type="submit" value="OK"
+                    class="btn btn-success">Zaloguj się</button></center>
 </form>
-<br><br>
-<div>Jeśli nie masz jeszcze konta <a href="{% url "register" %}">zarejestruj się</a></div>
+<div><p style="text-align:center;margin-top:4rem;" class="text-secondary">Jeśli nie masz jeszcze konta <a
+        href="{% url "register" %}">zarejestruj się</a></p></div>
+</div>
 {% endblock content %}

@@ -5,9 +5,13 @@
 {% block logout %}{% endblock logout %}
 {% block content %}
 
-Czy chcesz się wylogować?
-<form action="{% url 'logout' %}" method="post">
-    {% csrf_token %}
-    <input type="submit" value="Wyloguj">
-</form>
+
+<div style="margin-left:auto;margin-right:auto;margin-top:3rem">
+    <h3 style="text-align:center;margin-top:8rem;" class="text-secondary">Czy na pewno chcesz się wylogować?</h3>
+    <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <center><button style="margin-top: 3rem;" type="submit" class="btn btn-warning">Wyloguj</button></center>
+
+    </form>
+</div>
 {% endblock content %}
