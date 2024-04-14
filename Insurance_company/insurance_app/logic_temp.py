@@ -1,4 +1,4 @@
-from insurance_app.models import current_year
+from insurance_app.models import current_year, HousePolicyFactors
 from insurance_app.models import CarPolicyFactors
 
 """Scripts for calculatig price of insuraces for every each model
@@ -60,4 +60,46 @@ class PolicyPriceCalculator:
         return owners_factor
 
     def calculate_price(self):
-        return self.car_policy_factors.base * self.fuel_factor * self.mileage_factor_calc() * self.avg_mil_factor_calc() * self.rented_factor_calc() * self.owners_factor_calc() + self.age_factor
+        return round(((self.car_policy_factors.base * self.fuel_factor * self.mileage_factor_calc() * self.avg_mil_factor_calc() * self.rented_factor_calc() * self.owners_factor_calc() + self.age_factor()) /1000), 2)
+
+class HousePolicyPriceCalculator:
+
+    def __init__(self, house_type, number_of_owners, house_area, house_value):
+        self.house_policy_factors = HousePolicyFactors.objects.first()
+        self.number_of_owners = number_of_owners
+        self.house_area = house_area
+        self.house_value = house_value
+        self.house_type = house_type
+        self.house_type_factors = self.house_policy_factors.house_dict[house_type]
+
+    def house_area_calc(self):
+        if self.house_area < 30:
+            house_area_factor = self.house_area * self.house_policy_factors.house_area_factor_1
+        elif 30 < self.house_area < 50:
+            house_area_factor = self.house_area * self.house_policy_factors.house_area_factor_2
+        else:
+            house_area_factor = self.house_area * self.house_policy_factors.house_area_factor_3
+        return house_area_factor
+
+    def house_value_calc(self):
+        if self.house_value < 100000:
+            house_value_factor = (self.house_value / 1000) * self.house_policy_factors.house_value_factor_1
+        elif self.house_value > 100000 and self.house_value < 250000:
+            house_value_factor = (self.house_value / 1000) * self.house_policy_factors.house_value_factor_2
+        else:
+            house_value_factor = (self.house_value / 1000) * self.house_policy_factors.house_value_factor_3
+        return house_value_factor
+
+    def house_owners_factor_calc(self):
+        if self.number_of_owners > 1:
+            house_owners_factor = self.house_policy_factors.house_owners_factor_2
+        elif 1 < self.number_of_owners <= 3:
+            house_owners_factor = self.house_policy_factors.house_owners_factor_3
+        elif self.number_of_owners > 3:
+            house_owners_factor = self.house_policy_factors.house_owners_factor_4
+        else:
+            house_owners_factor = self.house_policy_factors.house_owners_factor_1
+        return house_owners_factor
+
+    def calculate_price(self):
+        return round(((self.house_policy_factors.base * self.house_area_calc() * self.house_value_calc() * self.house_owners_factor_calc()) /1000), 2)

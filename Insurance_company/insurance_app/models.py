@@ -46,12 +46,27 @@ class CarPolicyFactors(models.Model):
         "Biodiesel": 1.5
     }
 
+
 class HousePolicyFactors(models.Model):
+    base = models.FloatField(default=600)
+    house_area_factor_1 = models.FloatField(default=1)
+    house_area_factor_2 = models.FloatField(default=1.1)
+    house_area_factor_3 = models.FloatField(default=1.2)
+    house_owners_factor_1 = models.FloatField(default=1)
+    house_owners_factor_2 = models.FloatField(default=1.2)
+    house_owners_factor_3 = models.FloatField(default=1.8)
+    house_owners_factor_4 = models.FloatField(default=2)
+    house_value_factor_1 = models.FloatField(default=1)
+    house_value_factor_2 = models.FloatField(default=1.2)
+    house_value_factor_3 = models.FloatField(default=1.8)
+    house_value_factor_4 = models.FloatField(default=2)
+
     house_dict = {
         "Dom": 1,
         "Szeregowiec": 2,
         "Mieszkanie": 3
-        }
+    }
+
 
 class PolicyStatus(models.Model):
     STATUS_CHOICES = {
@@ -135,7 +150,7 @@ class CarInsurance(models.Model):
     policy_type = models.ForeignKey(CarPolicyType, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     valid_to = models.DateField(validators=[validate_future_date])
-    price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    price = models.FloatField(default=0.00)
     # form fields
     car_mark_model = models.CharField(max_length=100, choices=MARK_AND_MODELS)
     production_year = models.PositiveIntegerField(default=current_year(), validators=[validate_past_date])
@@ -174,13 +189,13 @@ class HouseInsurance(models.Model):
     policy_type = models.ForeignKey(HousePolicyType, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     valid_to = models.DateField()
-    price = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+    price = models.FloatField(default=0.00)
     # form fields
     house_type = models.CharField(max_length=100, choices=HOUSE_TYPES)
     number_of_owners = models.PositiveSmallIntegerField(default=1)
     house_area = models.PositiveIntegerField()
     house_city = models.CharField(max_length=50)
-    house_value = models.DecimalField(max_digits=12, decimal_places=2, default=0.00)
+    house_value = models.FloatField(default=0.00)
 
     def __str__(self):
         return f"Nazwa polisy: {self.policy_type}"
