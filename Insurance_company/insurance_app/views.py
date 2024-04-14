@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse, HttpResponseNotFound
 
 from .forms import CarInsuranceModelForm, HouseInsuranceModelForm
-from .logic_temp import PolicyPriceCalculator
+from .logic_temp import PolicyPriceCalculator, HousePolicyPriceCalculator
 from .models import CarPolicyType, CarInsurance, HousePolicyType, HouseInsurance, CarPolicyFactors, HousePolicyFactors
 
 
@@ -121,6 +121,7 @@ def policy_car_detail(request, policy_id):
     return render(request, "policy_car_detail.html", context=ctx)
 
 
+
 @login_required
 def policy_house_create(request):
     if request.method == "POST":
@@ -133,6 +134,7 @@ def policy_house_create(request):
     return render(request, "policy_house_create.html", {"house_policy_form": house_policy_form})
 
 
+@login_required
 def policy_house_confirm(request):
     if 'house_policy_data' in request.session:
         house_policy_data = request.session['house_policy_data']
@@ -140,29 +142,29 @@ def policy_house_confirm(request):
 
         if house_policy_form.is_valid():
             # Tworzenie instancji PolicyPriceCalculator z danymi z formularza
-            calculator = PolicyPriceCalculator(
-                house_type=HousePolicyFactors.house_dict[house_policy_form.cleaned_data['house_type']],
+            house_calculator = HousePolicyPriceCalculator(
+                house_type=house_policy_form.cleaned_data['house_type'],
                 number_of_owners=house_policy_form.cleaned_data['number_of_owners'],
                 house_area=house_policy_form.cleaned_data['house_area'],
-                house_city=house_policy_form.cleaned_data['house_city'],
-                house_value=house_policy_form.cleaned_dataa['house_value'],
+                house_value=house_policy_form.cleaned_data['house_value'],
             )
 
-        calculated_price = calculator.calculate_price()
+            house_calculated_price = house_calculator.calculate_price()
 
-        if request.method == "POST":
-            if house_policy_form.is_valid():
-                house_policy = house_policy_form.save(commit=False)
-                house_policy.customer = request.user.customer
-                house_policy.save()
-                del request.session['house_policy_data']
-                return redirect("policy_house_detail", policy_id=house_policy.policy_id)
-        policy_type_id = house_policy_data.get("policy_type")
-        policy_description = HousePolicyType.objects.get(pk=policy_type_id).policy_description
-        return render(request, "policy_house_confirm.html",
-                      {"house_policy_form": house_policy_form, "policy_description": policy_description, "calculated_price": calculated_price})
-    else:
-        return redirect("policy_house_create")
+            if request.method == "POST":
+                if house_policy_form.is_valid():
+                    house_policy = house_policy_form.save(commit=False)
+                    house_policy.customer = request.user.customer
+                    house_policy.save()
+                    del request.session['house_policy_data']
+                    return redirect("policy_house_detail", policy_id=house_policy.policy_id)
+            policy_type_id = house_policy_data.get("policy_type")
+            policy_description = HousePolicyType.objects.get(pk=policy_type_id).policy_description
+            return render(request, "policy_house_confirm.html",
+                          {"house_policy_form": house_policy_form, "policy_description": policy_description,
+                           "house_calculated_price": house_calculated_price})
+        else:
+            return redirect("policy_house_create")
 
 
 @login_required
@@ -172,16 +174,14 @@ def policy_house_detail(request, policy_id):
         policy_description = house_policy.policy_type.policy_description
     except HouseInsurance.DoesNotExist:
         return HttpResponseNotFound("Page Not Found")
+    house_calculator = HousePolicyPriceCalculator(
+        house_type=house_policy.house_type,
+        number_of_owners=house_policy.number_of_owners,
+        house_area=house_policy.house_area,
+        house_value=house_policy.house_value,
+        )
 
-#    calculator = PolicyPriceCalculator(
- #       house_type=HousePolicyFactors.house_dict[house_],     # do poprawy
-#        number_of_owners=house_policy.number_of_owners,
-#        house_area=house_policy.house_area,
- #       house_city=house_policy.house_city,
-#        house_value=house_policy.house_value
- #   )
-
-    calculated_price = calculator.calculate_price()
+    calculated_price = house_calculator.calculate_price()
 
     ctx = {
         "house_policy": house_policy,

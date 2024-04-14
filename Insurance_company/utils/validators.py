@@ -28,12 +28,12 @@ def validate_pesel_unique(pesel):
         raise ValidationError('This PESEL is already registered.')
 
 def validate_future_date(value):
-    if value <= datetime.today().date():
+    if value < datetime.today().date():
         raise ValidationError('The date must be in the future.')
 
 def validate_past_date(value):
     current_year = datetime.today().year
-    if value >= current_year:
+    if value > current_year:
         raise ValidationError('The year must be in the past.')
 
 def validate_uppercase(value):
