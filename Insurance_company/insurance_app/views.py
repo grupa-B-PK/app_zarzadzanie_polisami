@@ -121,7 +121,6 @@ def policy_car_detail(request, policy_id):
     return render(request, "policy_car_detail.html", context=ctx)
 
 
-
 @login_required
 def policy_house_create(request):
     if request.method == "POST":
@@ -179,14 +178,14 @@ def policy_house_detail(request, policy_id):
         number_of_owners=house_policy.number_of_owners,
         house_area=house_policy.house_area,
         house_value=house_policy.house_value,
-        )
+    )
 
-    calculated_price = house_calculator.calculate_price()
+    house_calculated_price = house_calculator.calculate_price()
 
     ctx = {
         "house_policy": house_policy,
         "policy_description": policy_description,
-        "calculated_price": calculated_price,
+        "house_calculated_price": house_calculated_price,
     }
 
     return render(request, "policy_house_detail.html", context=ctx)
