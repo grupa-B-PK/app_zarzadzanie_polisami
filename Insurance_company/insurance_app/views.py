@@ -95,8 +95,12 @@ def policy_car_confirm(request):
 @login_required
 def policy_car_detail(request, policy_id):
     try:
+
         car_policy = CarInsurance.objects.get(policy_id=policy_id)
+        if car_policy.customer != request.user.customer:
+            return HttpResponseNotFound("Page not found")
         policy_description = car_policy.policy_type.policy_description
+
     except CarInsurance.DoesNotExist:
         return HttpResponseNotFound("Page Not Found")
 
@@ -119,7 +123,6 @@ def policy_car_detail(request, policy_id):
     }
 
     return render(request, "policy_car_detail.html", context=ctx)
-
 
 
 @login_required
@@ -171,6 +174,8 @@ def policy_house_confirm(request):
 def policy_house_detail(request, policy_id):
     try:
         house_policy = HouseInsurance.objects.get(policy_id=policy_id)
+        if house_policy.customer != request.user.customer:
+            return HttpResponseNotFound("Page not found")
         policy_description = house_policy.policy_type.policy_description
     except HouseInsurance.DoesNotExist:
         return HttpResponseNotFound("Page Not Found")
@@ -179,14 +184,14 @@ def policy_house_detail(request, policy_id):
         number_of_owners=house_policy.number_of_owners,
         house_area=house_policy.house_area,
         house_value=house_policy.house_value,
-        )
+    )
 
-    calculated_price = house_calculator.calculate_price()
+    house_calculated_price = house_calculator.calculate_price()
 
     ctx = {
         "house_policy": house_policy,
         "policy_description": policy_description,
-        "calculated_price": calculated_price,
+        "house_calculated_price": house_calculated_price,
     }
 
     return render(request, "policy_house_detail.html", context=ctx)

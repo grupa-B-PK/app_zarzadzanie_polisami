@@ -7,6 +7,7 @@
     <form action="{% url "policy_house_create" %}" method="post">
         {% csrf_token %}
         {{ house_policy_form }}
+
         <input type="submit" value="Przelicz">
 
     </form>

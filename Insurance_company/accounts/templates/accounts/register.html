@@ -9,9 +9,9 @@
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
         {{ user_form|crispy }}
-        {{ customer_form.|crispy }}
+        {{ customer_form|crispy }}
         <center>
-            <button style="margin-top:2 rem;width:18rem;" type="submit" value="Register"
+            <button style="margin-top:2rem;width:18rem;" type="submit" value="Register"
                     class="btn btn-success">Zarejestruj
                 się
             </button>
