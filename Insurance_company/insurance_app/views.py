@@ -95,8 +95,12 @@ def policy_car_confirm(request):
 @login_required
 def policy_car_detail(request, policy_id):
     try:
+
         car_policy = CarInsurance.objects.get(policy_id=policy_id)
+        if car_policy.customer != request.user.customer:
+            return HttpResponseNotFound("Page not found")
         policy_description = car_policy.policy_type.policy_description
+
     except CarInsurance.DoesNotExist:
         return HttpResponseNotFound("Page Not Found")
 
@@ -170,6 +174,8 @@ def policy_house_confirm(request):
 def policy_house_detail(request, policy_id):
     try:
         house_policy = HouseInsurance.objects.get(policy_id=policy_id)
+        if house_policy.customer != request.user.customer:
+            return HttpResponseNotFound("Page not found")
         policy_description = house_policy.policy_type.policy_description
     except HouseInsurance.DoesNotExist:
         return HttpResponseNotFound("Page Not Found")
