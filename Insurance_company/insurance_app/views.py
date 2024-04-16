@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import View, TemplateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, Http404
 
 from .forms import CarInsuranceModelForm, HouseInsuranceModelForm
 from .logic_temp import PolicyPriceCalculator, HousePolicyPriceCalculator
@@ -92,17 +92,16 @@ def policy_car_confirm(request):
             return redirect("policy_car_create")
 
 
-@login_required
 def policy_car_detail(request, policy_id):
     try:
-
         car_policy = CarInsurance.objects.get(policy_id=policy_id)
-        if car_policy.customer != request.user.customer:
-            return HttpResponseNotFound("Page not found")
+        if not request.user.is_authenticated:
+            return render(request, "404.html")
+        elif car_policy.customer != request.user.customer:
+            return render(request, "404.html")
         policy_description = car_policy.policy_type.policy_description
-
     except CarInsurance.DoesNotExist:
-        return HttpResponseNotFound("Page Not Found")
+        return render(request, "404.html")
 
     calculator = PolicyPriceCalculator(
         production_year=car_policy.production_year,
@@ -170,15 +169,17 @@ def policy_house_confirm(request):
             return redirect("policy_house_create")
 
 
-@login_required
 def policy_house_detail(request, policy_id):
     try:
         house_policy = HouseInsurance.objects.get(policy_id=policy_id)
-        if house_policy.customer != request.user.customer:
-            return HttpResponseNotFound("Page not found")
+        if not request.user.is_authenticated:
+            return render(request, "404.html")
+        elif house_policy.customer != request.user.customer:
+            return render(request, "404.html")
         policy_description = house_policy.policy_type.policy_description
-    except HouseInsurance.DoesNotExist:
-        return HttpResponseNotFound("Page Not Found")
+    except CarInsurance.DoesNotExist:
+        return render(request, "404.html")
+
     house_calculator = HousePolicyPriceCalculator(
         house_type=house_policy.house_type,
         number_of_owners=house_policy.number_of_owners,
