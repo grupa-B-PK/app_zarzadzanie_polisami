@@ -49,9 +49,9 @@ class CarPolicyFactors(models.Model):
 
 class HousePolicyFactors(models.Model):
     base = models.FloatField(default=600)
-    house_area_factor_1 = models.FloatField(default=1)
-    house_area_factor_2 = models.FloatField(default=1.1)
-    house_area_factor_3 = models.FloatField(default=1.2)
+    house_area_factor_1 = models.FloatField(default=1.5)
+    house_area_factor_2 = models.FloatField(default=1.8)
+    house_area_factor_3 = models.FloatField(default=2)
     house_owners_factor_1 = models.FloatField(default=1)
     house_owners_factor_2 = models.FloatField(default=1.2)
     house_owners_factor_3 = models.FloatField(default=1.8)
