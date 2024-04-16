@@ -62,7 +62,7 @@ def policy_car_confirm(request):
         car_policy_form = CarInsuranceModelForm(car_policy_data)
 
         if car_policy_form.is_valid():
-            # Tworzenie instancji PolicyPriceCalculator z danymi z formularza
+            # Create an instance of PolicyPriceCalculator with form data
             calculator = PolicyPriceCalculator(
                 production_year=car_policy_form.cleaned_data['production_year'],
                 fuel_factor=CarPolicyFactors.fuel_dict[car_policy_form.cleaned_data['fuel_type']],
@@ -79,6 +79,7 @@ def policy_car_confirm(request):
                 if car_policy_form.is_valid():
                     car_policy = car_policy_form.save(commit=False)
                     car_policy.customer = request.user.customer
+                    car_policy.price = calculated_price
                     car_policy.save()
                     del request.session['car_policy_data']
                     return redirect("policy_car_detail", policy_id=car_policy.policy_id)
@@ -86,7 +87,7 @@ def policy_car_confirm(request):
             policy_description = CarPolicyType.objects.get(pk=policy_type_id).policy_description
 
             return render(request, "policy_car_confirm.html",
-                          {"car_policy_form": car_policy_form, "policy_description": policy_description,
+                          {"car_policy": car_policy_data, "policy_description": policy_description,
                            "calculated_price": calculated_price})
         else:
             return redirect("policy_car_create")
@@ -103,22 +104,9 @@ def policy_car_detail(request, policy_id):
     except CarInsurance.DoesNotExist:
         return render(request, "404.html")
 
-    calculator = PolicyPriceCalculator(
-        production_year=car_policy.production_year,
-        fuel_factor=CarPolicyFactors.fuel_dict[car_policy.fuel_type],
-        fuel_type=car_policy.fuel_type,
-        mileage=car_policy.mileage,
-        average_year_mileage=car_policy.average_year_mileage,
-        is_rented=car_policy.is_rented,
-        number_of_owners=car_policy.number_of_owners
-    )
-
-    calculated_price = calculator.calculate_price()
-
     ctx = {
         "car_policy": car_policy,
         "policy_description": policy_description,
-        "calculated_price": calculated_price,
     }
 
     return render(request, "policy_car_detail.html", context=ctx)
@@ -143,7 +131,7 @@ def policy_house_confirm(request):
         house_policy_form = HouseInsuranceModelForm(house_policy_data)
 
         if house_policy_form.is_valid():
-            # Tworzenie instancji PolicyPriceCalculator z danymi z formularza
+            # Create an instance of PolicyPriceCalculator with form data
             house_calculator = HousePolicyPriceCalculator(
                 house_type=house_policy_form.cleaned_data['house_type'],
                 number_of_owners=house_policy_form.cleaned_data['number_of_owners'],
@@ -157,13 +145,14 @@ def policy_house_confirm(request):
                 if house_policy_form.is_valid():
                     house_policy = house_policy_form.save(commit=False)
                     house_policy.customer = request.user.customer
+                    house_policy.price = house_calculated_price
                     house_policy.save()
                     del request.session['house_policy_data']
                     return redirect("policy_house_detail", policy_id=house_policy.policy_id)
             policy_type_id = house_policy_data.get("policy_type")
             policy_description = HousePolicyType.objects.get(pk=policy_type_id).policy_description
             return render(request, "policy_house_confirm.html",
-                          {"house_policy_form": house_policy_form, "policy_description": policy_description,
+                          {"house_policy": house_policy_data, "policy_description": policy_description,
                            "house_calculated_price": house_calculated_price})
         else:
             return redirect("policy_house_create")
@@ -180,19 +169,9 @@ def policy_house_detail(request, policy_id):
     except CarInsurance.DoesNotExist:
         return render(request, "404.html")
 
-    house_calculator = HousePolicyPriceCalculator(
-        house_type=house_policy.house_type,
-        number_of_owners=house_policy.number_of_owners,
-        house_area=house_policy.house_area,
-        house_value=house_policy.house_value,
-    )
-
-    house_calculated_price = house_calculator.calculate_price()
-
     ctx = {
         "house_policy": house_policy,
         "policy_description": policy_description,
-        "house_calculated_price": house_calculated_price,
     }
 
     return render(request, "policy_house_detail.html", context=ctx)
