@@ -1,12 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
-from django.views.generic import View, TemplateView, ListView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse, HttpResponseNotFound, Http404
+from django.shortcuts import render, redirect
+from django.views.generic import View, TemplateView
 
 from .forms import CarInsuranceModelForm, HouseInsuranceModelForm
 from .logic_temp import PolicyPriceCalculator, HousePolicyPriceCalculator
-from .models import CarPolicyType, CarInsurance, HousePolicyType, HouseInsurance, CarPolicyFactors, HousePolicyFactors
+from .models import CarPolicyType, CarInsurance, HousePolicyType, HouseInsurance, CarPolicyFactors
 
 
 class IndexView(TemplateView):
@@ -82,6 +81,7 @@ def policy_car_confirm(request):
                     car_policy.price = calculated_price
                     car_policy.save()
                     del request.session['car_policy_data']
+
                     return redirect("policy_car_detail", policy_id=car_policy.policy_id)
             policy_type_id = car_policy_data.get("policy_type")
             policy_description = CarPolicyType.objects.get(pk=policy_type_id).policy_description
@@ -101,6 +101,7 @@ def policy_car_detail(request, policy_id):
         elif car_policy.customer != request.user.customer:
             return render(request, "404.html")
         policy_description = car_policy.policy_type.policy_description
+        messages.success(request, "Gratulacje! Polisa została zakupiona pomyślnie!")
     except CarInsurance.DoesNotExist:
         return render(request, "404.html")
 
@@ -151,6 +152,7 @@ def policy_house_confirm(request):
                     return redirect("policy_house_detail", policy_id=house_policy.policy_id)
             policy_type_id = house_policy_data.get("policy_type")
             policy_description = HousePolicyType.objects.get(pk=policy_type_id).policy_description
+            messages.success(request, "Gratulacje! Polisa została zakupiona pomyślnie!")
             return render(request, "policy_house_confirm.html",
                           {"house_policy": house_policy_data, "policy_description": policy_description,
                            "house_calculated_price": house_calculated_price})
