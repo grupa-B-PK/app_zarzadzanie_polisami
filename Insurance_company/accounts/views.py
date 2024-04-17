@@ -1,6 +1,9 @@
-from django.shortcuts import render, redirect
-from django.views.generic import View
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import View, DetailView
+from django.http import Http404
+from django.contrib.auth.mixins import LoginRequiredMixin
 
+from accounts.models import Customer
 from accounts.forms import CustomerForm, CustomUserForm
 
 
@@ -45,3 +48,18 @@ class RegisterView(View):
         customer_profile.save()
 
         return customer_profile
+
+class CustomerDetailView(View):
+    def get(self, request, pk):
+        customer = get_object_or_404(Customer, pk=pk)
+
+        if not request.user.is_authenticated:
+            return render(request, "404.html")
+        elif request.user.customer != customer:
+            return render(request, "404.html")
+
+        context = {
+            'customer': customer,
+        }
+
+        return render(request, 'accounts/customer_detail.html', context)

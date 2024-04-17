@@ -42,12 +42,13 @@
             {% if request.user.is_authenticated and not request.user.is_superuser %}
             <li class="navbar-nav justify-content-end">
                 <a class="nav-link" href="{% url 'policy_list' %}">Moje polisy</a>
+                {% if request.user.customer %}
+                <a class="nav-link" href="{% url 'customer_detail' request.user.customer.pk %}">Moje dane</a>
+                {% endif %}
             </li>
             {% endif %}
-            </li>
             {% endif %}
         </ul>
-
     </div>
     <div class="navbar-nav">
         {% if request.user.is_superuser %}

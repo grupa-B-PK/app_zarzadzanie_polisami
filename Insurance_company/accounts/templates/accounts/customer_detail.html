@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dane użytkownika
+{% endblock title %}
+
+{% block content %}
+<h3 style="text-align:center;margin-top:3rem;">Twoje dane:</h3>
+<div style="width:60%;margin-top:3rem;margin-left:auto;margin-right:auto;">
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <td>Username:</td>
+                <td>{{ customer.user.username }}</td>
+            </tr>
+            <tr>
+                <td>Imię:</td>
+                <td>{{ customer.user.first_name }}</td>
+            </tr>
+            <tr>
+                <td>Nazwisko:</td>
+                <td>{{ customer.user.last_name }}</td>
+            </tr>
+            <tr>
+                <td>PESEL:</td>
+                <td>{{ customer.pesel }}</td>
+            </tr>
+            <tr>
+                <td>Adres:</td>
+                <td>{{ customer.address }}</td>
+            </tr>
+            <tr>
+                <td>Numer telefonu:</td>
+                <td>{{ customer.phone_number }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div style="text-align:center;">
+    <button class="btn btn-info" style="margin-top: 2rem;">
+        <a href="{% url 'policy_list' %}" style="text-decoration:none;color:white;">Sprawdź listę zawartych polis</a>
+    </button>
+</div>
+
+<div style="text-align:center;margin-top:10rem;left:auto;right:auto;width:100%;">
+    <div class="btn btn-light">
+        <a style="text-decoration:none;" href="{% url 'main_page' %}">Powrót do strony głównej</a>
+    </div>
+</div>
+{% endblock content %}
