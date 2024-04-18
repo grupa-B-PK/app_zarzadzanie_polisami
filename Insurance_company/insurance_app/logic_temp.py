@@ -1,4 +1,4 @@
-from insurance_app.models import current_year, HousePolicyFactors
+from insurance_app.models import current_year, HousePolicyFactors, CarPolicyType, HousePolicyType
 from insurance_app.models import CarPolicyFactors
 
 """Scripts for calculatig price of insuraces for every each model
@@ -9,8 +9,9 @@ from insurance_app.models import CarPolicyFactors
 class PolicyPriceCalculator:
 
     def __init__(self, production_year, fuel_factor, fuel_type, mileage, average_year_mileage, is_rented,
-                 number_of_owners):
+                 number_of_owners, policy_type):
         self.car_policy_factors = CarPolicyFactors.objects.first()
+        self.car_policy_type_factors = CarPolicyType.objects.get(policy_type=policy_type)
         self.production_year = production_year
         self.fuel_type = fuel_type
         self.mileage = mileage
@@ -19,6 +20,7 @@ class PolicyPriceCalculator:
         self.number_of_owners = number_of_owners
         self.age_factor = (current_year() - production_year) * self.car_policy_factors.age_factor
         self.fuel_factor = self.car_policy_factors.fuel_dict[fuel_type]
+        self.policy_type_factor = self.car_policy_type_factors.type_factor
 
     def mileage_factor_calc(self):
         if self.mileage < 100000:
@@ -59,22 +61,24 @@ class PolicyPriceCalculator:
 
     def calculate_price(self):
         return round(((
-                                  self.car_policy_factors.base +
-                                  (self.fuel_factor * self.mileage_factor_calc() +
-                                  self.avg_mil_factor_calc() * self.rented_factor_calc() * self.owners_factor_calc())
-                                  - self.age_factor) *2),
+                              self.car_policy_factors.base +
+                              (self.fuel_factor * self.mileage_factor_calc() +
+                               self.avg_mil_factor_calc() * self.rented_factor_calc() * self.owners_factor_calc()) * self.policy_type_factor
+                              - self.age_factor) * 2),
                      2)
 
 
 class HousePolicyPriceCalculator:
 
-    def __init__(self, house_type, number_of_owners, house_area, house_value):
+    def __init__(self, house_type, number_of_owners, house_area, house_value, policy_type):
         self.house_policy_factors = HousePolicyFactors.objects.first()
+        self.house_policy_type_factors = HousePolicyType.objects.get(policy_type=policy_type)
         self.number_of_owners = number_of_owners
         self.house_area = house_area
         self.house_value = house_value
         self.house_type = house_type
         self.house_type_factors = self.house_policy_factors.house_dict[house_type]
+        self.policy_house_type_factor = self.house_policy_type_factors.type_factor
 
     def house_area_calc(self):
         if self.house_area <= 30:
@@ -107,6 +111,6 @@ class HousePolicyPriceCalculator:
 
     def calculate_price(self):
         return round(((
-                                  self.house_policy_factors.base + self.house_area_calc() + self.house_value_calc() +
-                                  self.house_owners_factor_calc()*10) / 10*2),
+                              self.house_policy_factors.base + self.house_area_calc() + self.house_value_calc() +
+                              self.house_owners_factor_calc() * 10 * self.policy_house_type_factor) / 10 * 2),
                      3)

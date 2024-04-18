@@ -58,6 +58,7 @@ def policy_car_create(request):
 def policy_car_confirm(request):
     if 'car_policy_data' in request.session:
         car_policy_data = request.session['car_policy_data']
+        policy_type = car_policy_data.get("policy_type")
         car_policy_form = CarInsuranceModelForm(car_policy_data)
 
         if car_policy_form.is_valid():
@@ -69,7 +70,8 @@ def policy_car_confirm(request):
                 mileage=car_policy_form.cleaned_data['mileage'],
                 average_year_mileage=car_policy_form.cleaned_data['average_year_mileage'],
                 is_rented=car_policy_form.cleaned_data['is_rented'],
-                number_of_owners=car_policy_form.cleaned_data['number_of_owners']
+                number_of_owners=car_policy_form.cleaned_data['number_of_owners'],
+                policy_type=policy_type,
             )
 
             calculated_price = calculator.calculate_price()
@@ -133,6 +135,7 @@ def policy_house_create(request):
 def policy_house_confirm(request):
     if 'house_policy_data' in request.session:
         house_policy_data = request.session['house_policy_data']
+        policy_type = house_policy_data.get("policy_type")
         house_policy_form = HouseInsuranceModelForm(house_policy_data)
 
         if house_policy_form.is_valid():
@@ -141,6 +144,7 @@ def policy_house_confirm(request):
                 number_of_owners=house_policy_form.cleaned_data['number_of_owners'],
                 house_area=house_policy_form.cleaned_data['house_area'],
                 house_value=house_policy_form.cleaned_data['house_value'],
+                policy_type=policy_type,
             )
 
             house_calculated_price = house_calculator.calculate_price()
@@ -159,7 +163,7 @@ def policy_house_confirm(request):
 
             return render(request, "policy_house_confirm.html",
                           {"house_policy": house_policy_data, "policy_description": policy_description,
-                           "house_calculated_price": house_calculated_price,})
+                           "house_calculated_price": house_calculated_price, })
         else:
             return redirect("policy_house_create")
 
