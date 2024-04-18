@@ -81,14 +81,15 @@ def policy_car_confirm(request):
                     car_policy.price = calculated_price
                     car_policy.save()
                     del request.session['car_policy_data']
-
+                    messages.success(request, "Gratulacje! Polisa została zawarta!")
                     return redirect("policy_car_detail", policy_id=car_policy.policy_id)
             policy_type_id = car_policy_data.get("policy_type")
             policy_description = CarPolicyType.objects.get(pk=policy_type_id).policy_description
 
             return render(request, "policy_car_confirm.html",
                           {"car_policy": car_policy_data, "policy_description": policy_description,
-                           "calculated_price": calculated_price})
+                           "calculated_price": calculated_price, })
+
         else:
             return redirect("policy_car_create")
 
@@ -101,7 +102,10 @@ def policy_car_detail(request, policy_id):
         elif car_policy.customer != request.user.customer:
             return render(request, "404.html")
         policy_description = car_policy.policy_type.policy_description
-        messages.success(request, "Gratulacje! Polisa została zakupiona pomyślnie!")
+
+        # if 'message' in request.GET:
+        #     messages.success(request, "Gratulacje! Polisa została zawarta!")
+
     except CarInsurance.DoesNotExist:
         return render(request, "404.html")
 
@@ -132,7 +136,6 @@ def policy_house_confirm(request):
         house_policy_form = HouseInsuranceModelForm(house_policy_data)
 
         if house_policy_form.is_valid():
-            # Create an instance of PolicyPriceCalculator with form data
             house_calculator = HousePolicyPriceCalculator(
                 house_type=house_policy_form.cleaned_data['house_type'],
                 number_of_owners=house_policy_form.cleaned_data['number_of_owners'],
@@ -149,13 +152,14 @@ def policy_house_confirm(request):
                     house_policy.price = house_calculated_price
                     house_policy.save()
                     del request.session['house_policy_data']
+                    messages.success(request, "Gratulacje! Polisa została zawarta!")
                     return redirect("policy_house_detail", policy_id=house_policy.policy_id)
             policy_type_id = house_policy_data.get("policy_type")
             policy_description = HousePolicyType.objects.get(pk=policy_type_id).policy_description
-            messages.success(request, "Gratulacje! Polisa została zakupiona pomyślnie!")
+
             return render(request, "policy_house_confirm.html",
                           {"house_policy": house_policy_data, "policy_description": policy_description,
-                           "house_calculated_price": house_calculated_price})
+                           "house_calculated_price": house_calculated_price,})
         else:
             return redirect("policy_house_create")
 
@@ -168,6 +172,7 @@ def policy_house_detail(request, policy_id):
         elif house_policy.customer != request.user.customer:
             return render(request, "404.html")
         policy_description = house_policy.policy_type.policy_description
+
     except CarInsurance.DoesNotExist:
         return render(request, "404.html")
 
