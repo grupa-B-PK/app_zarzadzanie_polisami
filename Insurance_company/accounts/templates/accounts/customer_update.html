@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+Aktualizacja danych użytkownika
+{% endblock title %}
+
+{% block content %}
+<h3 style="text-align:center;margin-top:3rem;">Wprowadź nowe dane:</h3>
+<div style="width:60%;margin-top:3rem;margin-left:auto;margin-right:auto;">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <label for="id_new_password1">Nowe hasło:</label>
+        <input type="password" name="new_password1" id="id_new_password1">
+
+        <label for="id_new_password2">Potwierdź nowe hasło:</label>
+        <input type="password" name="new_password2" id="id_new_password2">
+
+        <div style="text-align:center;">
+        <button type="submit" class="btn btn-info" style="margin-top: 2rem; text-decoration:none;color:white;">Aktualizuj dane</button>
+        </div>
+    </form>
+</div>
+
+<div style="text-align:center;">
+    <button class="btn btn-info" style="margin-top: 2rem;">
+        <a href="{% url 'customer_detail' customer.pk %}" style="text-decoration:none;color:white;">Wróć do swoich danych</a>
+    </button>
+</div>
+
+<div style="text-align:center;">
+    <button class="btn btn-info" style="margin-top: 2rem;">
+        <a href="{% url 'policy_list' %}" style="text-decoration:none;color:white;">Sprawdź listę zawartych polis</a>
+    </button>
+</div>
+
+<div style="text-align:center;">
+    <button class="btn btn-info" style="margin-top: 2rem;">
+        <a href="{% url 'main_page' %}" style="text-decoration:none;color:white;">Wróć do strony głównej</a>
+    </button>
+</div>
+{% endblock content %}
