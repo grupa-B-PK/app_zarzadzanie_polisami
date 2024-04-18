@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View, DetailView
 from django.http import Http404
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from accounts.models import Customer
@@ -63,3 +64,30 @@ class CustomerDetailView(View):
         }
 
         return render(request, 'accounts/customer_detail.html', context)
+
+
+class CustomerUpdateView(View):
+    def get(self, request, pk):
+        customer = get_object_or_404(Customer, pk=pk)
+
+        if not request.user.is_authenticated:
+            return render(request, "404.html")
+        elif request.user.customer != customer:
+            return render(request, "404.html")
+
+        form = CustomerForm(instance=customer)
+        context = {'form': form, 'customer': customer}
+
+        return render(request, 'accounts/customer_update.html', context)
+
+    def post(self, request, pk):
+        customer = get_object_or_404(Customer, pk=pk)
+        form = CustomerForm(request.POST, instance=customer)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Pomyślnie wprowadzono nowe dane.")
+            return redirect('customer_detail', pk=pk)
+
+        context = {'form': form, 'customer': customer}
+        return render(request, 'accounts/customer_update.html', context)

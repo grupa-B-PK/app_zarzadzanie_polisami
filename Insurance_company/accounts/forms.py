@@ -30,6 +30,15 @@ class CustomerForm(forms.ModelForm):
 
     def clean_pesel(self):
         pesel = self.cleaned_data.get('pesel')
+        instance = getattr(self, 'instance', None)
+
+        queryset = Customer.objects.filter(pesel=pesel)
+
+        if instance and instance.pk:
+            queryset = queryset.exclude(pk=instance.pk)
+
+        if queryset.exists():
+            validate_pesel_unique(pesel)
+
         validate_pesel(pesel)
-        validate_pesel_unique(pesel)
         return pesel
