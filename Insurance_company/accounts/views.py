@@ -84,22 +84,10 @@ class CustomerUpdateView(View):
         customer = get_object_or_404(Customer, pk=pk)
         form = CustomerForm(request.POST, instance=customer)
 
-        if not request.user.is_authenticated:
-            return render(request, "404.html")
-        elif request.user.customer != customer:
-            return render(request, "404.html")
-
         if form.is_valid():
-            new_password1 = form.cleaned_data.get('new_password1')
-            new_password2 = form.cleaned_data.get('new_password2')
-
-            if new_password1 and new_password1 == new_password2:
-                customer.user.set_password(new_password1)
-                customer.user.save()
-
             form.save()
-            messages.success(request, "Pomyślnie wprowadzono nowe dane.")
-            return redirect('customer_detail', pk=customer.pk)
+            messages.success(request, f"Pomyślnie wprowadzono nowe dane.")
+            return redirect('customer_detail', pk=pk)
 
         context = {'form': form, 'customer': customer}
         return render(request, 'accounts/customer_update.html', context)
