@@ -7,10 +7,11 @@
 {% block content %}
 
     <h2> Podsumowanie wyceny:</h2>
-    <p>Przeliczona cena: {{ calculated_price }} PLN</p>
     <p>Szczegółowy opis polisy: {{ policy_description }}</p>
     <ul>
         <li>Typ polisy: {{ car_policy.policy_type }}</li>
+        <li>Wysokość składki: : {{ calculated_price }} PLN</li>
+        <li>Termin obowiązywania ochrony: {{ car_policy.valid_to }}</li>
         <li>Marka i model pojazdu: {{ car_policy.car_mark_model }}</li>
         <li>Rok produkcji: {{ car_policy.production_year }}</li>
         <li>Typ paliwa: {{ car_policy.fuel_type }}</li>
