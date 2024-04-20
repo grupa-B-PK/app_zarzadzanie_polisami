@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View, DetailView
-from django.http import Http404
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from accounts.models import Customer
 from accounts.forms import CustomerForm, CustomUserForm

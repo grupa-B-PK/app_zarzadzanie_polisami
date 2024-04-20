@@ -34,7 +34,7 @@ def validate_future_date(value):
 def validate_past_date(value):
     current_year = datetime.today().year
     if value > current_year:
-        raise ValidationError('The year must be in the past.')
+        raise ValidationError('You must choose a present or past year.')
 
 def validate_uppercase(value):
     if not (value and value[0].isupper() and value[1:].islower()):

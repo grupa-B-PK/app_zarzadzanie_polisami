@@ -105,9 +105,6 @@ def policy_car_detail(request, policy_id):
             return render(request, "404.html")
         policy_description = car_policy.policy_type.policy_description
 
-        # if 'message' in request.GET:
-        #     messages.success(request, "Gratulacje! Polisa została zawarta!")
-
     except CarInsurance.DoesNotExist:
         return render(request, "404.html")
 
