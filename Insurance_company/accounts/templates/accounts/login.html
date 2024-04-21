@@ -7,6 +7,15 @@
 {% block content %}
 <h3 style="text-align:center;margin-top:4rem;" class="text-secondary">Logowanie</h3>
 <div style="width:40%;margin-left:auto;margin-right:auto;margin-top:3rem;">
+
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <p style="text-align:center;color:red;">{{ message }}</p>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
 <form action="{% url 'login' %}" method="post">
     {% csrf_token %}
     {{ form|crispy }}

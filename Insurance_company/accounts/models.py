@@ -9,7 +9,7 @@ User = settings.AUTH_USER_MODEL
 class Customer(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    pesel = models.CharField(max_length=11, validators=[validate_pesel])
+    pesel = models.CharField(max_length=11, validators=[validate_pesel, validate_pesel_unique])
     address = models.CharField(max_length=255)
     phone_number = models.CharField(max_length=15, blank=True)
     privacy_policy_accepted = models.BooleanField(default=False)
@@ -17,4 +17,3 @@ class Customer(models.Model):
 
     def __str__(self):
         return f"Customer profile of {self.user.username}"
-

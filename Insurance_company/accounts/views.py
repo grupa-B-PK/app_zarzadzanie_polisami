@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View, DetailView
 from django.contrib import messages
+from django.contrib.auth.forms import SetPasswordForm
 
 from accounts.models import Customer
 from accounts.forms import CustomerForm, CustomUserForm
@@ -48,6 +49,7 @@ class RegisterView(View):
 
         return customer_profile
 
+
 class CustomerDetailView(View):
     def get(self, request, pk):
         customer = get_object_or_404(Customer, pk=pk)
@@ -91,3 +93,30 @@ class CustomerUpdateView(View):
 
         context = {'form': form, 'customer': customer}
         return render(request, 'accounts/customer_update.html', context)
+
+
+class CustomerPasswordChangeView(View):
+    def get(self, request, pk):
+        customer = get_object_or_404(Customer, pk=pk)
+
+        if not request.user.is_authenticated:
+            return render(request, "404.html")
+        elif request.user.customer != customer:
+            return render(request, "404.html")
+
+        form = SetPasswordForm(user=request.user)
+        context = {'form': form, 'customer': customer}
+
+        return render(request, 'accounts/password_change.html', context)
+
+    def post(self, request, pk):
+        customer = get_object_or_404(Customer, pk=pk)
+        form = SetPasswordForm(user=request.user, data=request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Pomyślnie wprowadzono nowe hasło.")
+            return redirect('login')
+
+        context = {'form': form, 'customer': customer}
+        return render(request, 'accounts/password_change.html', context)

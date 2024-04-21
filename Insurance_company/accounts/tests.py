@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import SetPasswordForm
 from django.test import TestCase, Client
 from django.core.exceptions import ValidationError
 from django.urls import reverse
@@ -297,3 +298,69 @@ class CustomerUpdateViewTest(TestCase):
         self.assertEqual(self.customer.phone_number, data['phone_number'])
         self.assertEqual(self.customer.privacy_policy_accepted, data['privacy_policy_accepted'])
         self.assertEqual(self.customer.marketing_agreement, data['marketing_agreement'])
+
+class CustomerPasswordChangeViewTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.user = User.objects.create_user(
+            username='test_user',
+            first_name='John',
+            last_name='Doe',
+            password='test_password'
+        )
+        self.customer = Customer.objects.create(
+            user=self.user,
+            pesel='44051401458',
+            address='Test City',
+            phone_number='123456789',
+            privacy_policy_accepted=True,
+            marketing_agreement=False
+        )
+        self.password_change_url = reverse('password_change', args=[self.customer.pk])
+
+    def test_get_customer_password_change_authenticated(self):
+        self.client.login(username='test_user', password='test_password')
+        response = self.client.get(self.password_change_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'accounts/password_change.html')
+        self.assertIsInstance(response.context['form'], SetPasswordForm)
+
+    def test_get_customer_password_change_unauthenticated(self):
+        self.client.logout()
+        response = self.client.get(self.password_change_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, '404.html')
+
+    def test_get_customer_password_change_different_user(self):
+        self.another_user = User.objects.create_user(
+            username='another_test_user',
+            first_name='Jane',
+            last_name='Doe',
+            password='test_password'
+        )
+        self.another_customer = Customer.objects.create(
+            user=self.another_user,
+            pesel='44051401459',
+            address='Another Test City',
+            phone_number='987654321',
+            privacy_policy_accepted=True,
+            marketing_agreement=False
+        )
+
+        self.client.login(username='another_test_user', password='test_password')
+        response = self.client.get(self.password_change_url)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, '404.html')
+
+    def test_post_customer_password_change_valid_data(self):
+        self.client.login(username='test_user', password='test_password')
+        data = {
+            'new_password1': 'new_password',
+            'new_password2': 'new_password',
+        }
+        response = self.client.post(self.password_change_url, data)
+
+        self.assertRedirects(response, reverse('login'))
