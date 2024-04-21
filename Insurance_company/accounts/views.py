@@ -1,8 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View, DetailView
-from django.http import Http404
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 
 from accounts.models import Customer
 from accounts.forms import CustomerForm, CustomUserForm
@@ -76,6 +74,7 @@ class CustomerUpdateView(View):
             return render(request, "404.html")
 
         form = CustomerForm(instance=customer)
+        form.fields.pop('pesel')
         context = {'form': form, 'customer': customer}
 
         return render(request, 'accounts/customer_update.html', context)
@@ -83,6 +82,7 @@ class CustomerUpdateView(View):
     def post(self, request, pk):
         customer = get_object_or_404(Customer, pk=pk)
         form = CustomerForm(request.POST, instance=customer)
+        form.fields.pop('pesel')
 
         if form.is_valid():
             form.save()

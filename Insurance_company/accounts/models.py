@@ -15,6 +15,6 @@ class Customer(models.Model):
     privacy_policy_accepted = models.BooleanField(default=False)
     marketing_agreement = models.BooleanField(default=False)
 
-def __str__(self):
-    return f"Customer profile of {self.user.username}"
+    def __str__(self):
+        return f"Customer profile of {self.user.username}"
 

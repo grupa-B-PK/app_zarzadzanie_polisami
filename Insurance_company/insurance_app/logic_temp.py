@@ -1,10 +1,6 @@
 from insurance_app.models import current_year, HousePolicyFactors, CarPolicyType, HousePolicyType
 from insurance_app.models import CarPolicyFactors
 
-"""Scripts for calculatig price of insuraces for every each model
- To be merged after finishing CRUD forms
- """
-
 
 class PolicyPriceCalculator:
 
