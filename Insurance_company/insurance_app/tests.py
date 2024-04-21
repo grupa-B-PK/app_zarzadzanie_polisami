@@ -248,6 +248,7 @@ class PolicyListViewTest(BaseTestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('login') + '?next=/insurance_app/policy_list/')
 
+
 class PolicyCarCreateViewTest(BaseTestCase):
 
     def test_get_request(self):
