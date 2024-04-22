@@ -52,6 +52,12 @@ Dane użytkownika
 
 <div style="text-align:center;">
     <button class="btn btn-info" style="margin-top: 2rem;">
+        <a href="{% url 'password_change' request.user.customer.pk %}" style="text-decoration:none;color:white;">Zmień swoje hasło</a>
+    </button>
+</div>
+
+<div style="text-align:center;">
+    <button class="btn btn-info" style="margin-top: 2rem;">
         <a href="{% url 'policy_list' %}" style="text-decoration:none;color:white;">Sprawdź listę zawartych polis</a>
     </button>
 </div>
