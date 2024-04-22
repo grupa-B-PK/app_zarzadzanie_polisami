@@ -1,0 +1,129 @@
+
+[
+  {
+    "model": "insurance_app.CarPolicyFactors",
+    "pk": 8,
+    "fields": {
+      "base": 600,
+      "age_factor": 1,
+      "mileage_factor_1": 0.002,
+      "mileage_factor_2": 0.0033,
+      "mileage_factor_3": 0.0044,
+      "avg_year_mileage_1": 0.05,
+      "avg_year_mileage_2": 0.07,
+      "avg_year_mileage_3": 0.09,
+      "avg_year_mileage_4": 0.1,
+      "rented_factor_1": 1,
+      "rented_factor_2": 3,
+      "owners_factor_1": 1,
+      "owners_factor_2": 1.2,
+      "owners_factor_3": 1.8,
+      "owners_factor_4": 2
+    }
+  },
+  {
+    "model": "insurance_app.HousePolicyFactors",
+    "pk": 8,
+    "fields": {
+      "base": 600,
+      "house_area_factor_1": 1.5,
+      "house_area_factor_2": 1.8,
+      "house_area_factor_3": 2,
+      "house_owners_factor_1": 1,
+      "house_owners_factor_2": 1.2,
+      "house_owners_factor_3": 1.8,
+      "house_owners_factor_4": 2,
+      "house_value_factor_1": 1,
+      "house_value_factor_2": 1.2,
+      "house_value_factor_3": 1.8,
+      "house_value_factor_4": 2
+    }
+  },
+  {
+    "model": "insurance_app.CarPolicyType",
+    "pk": "Standard OC",
+    "fields": {
+      "policy_type": "Standard OC",
+      "policy_description": "Ubezpieczenie odpowiedzialności cywilnej (OC) samochodu obejmuje przede wszystkim rekompensatę szkód, powstałych w wyniku spowodowania kolizji lub wypadku drogowego. Dotyczy to zarówno szkód osobowych, jak i materialnych. Co istotne, polisa OC przypisana jest do konkretnego samochodu, a nie do jego właściciela.",
+      "type_factor": 1.2
+    }
+  },
+  {
+    "model": "insurance_app.CarPolicyType",
+    "pk": "OC + AC",
+    "fields": {
+      "policy_type": "OC + AC",
+      "policy_description": "Ubezpieczenie OC pokrywa szkody osoby przez nas poszkodowanej, z kolei odszkodowanie z tytułu AC likwiduje szkody własne. Zakres ubezpieczenia OC jest identyczny bez względu na zakład ubezpieczeń, zaś w przypadku polisy AC panuje pełna dowolność, dlatego oferta każdej firmy może być zupełnie inna.",
+      "type_factor": 2.2
+    }
+  },
+  {
+    "model": "insurance_app.CarPolicyType",
+    "pk": "PREMIUM",
+    "fields": {
+      "policy_type": "PREMIUM",
+      "policy_description": "Ubezpieczenie w Wariancie PREMIUM obejmuje utratę, zniszczenie lub uszkodzenie pojazdu wraz z wyposażeniem podstawowym, w zakresie szkody częściowej i całkowitej powstałej w wyniku zdarzeń nie wyłączonych z zakresu odpowiedzialności. Ubezpieczenie obejmuje parkowanie pojazdu po szkodzie w każdym wariancie.",
+      "type_factor": 3
+    }
+  },
+  {
+    "model": "insurance_app.HousePolicyType",
+    "pk": "Mieszkanie",
+    "fields": {
+      "policy_type": "Mieszkanie",
+      "policy_description": "Ta polisa jest dedykowana dla mieszkańców bloków mieszkalnych, gdzie ryzyko może być nieco inne niż dla domów jednorodzinnych. Oferuje ona ochronę m.in. przed zalaniem, kradzieżami, uszkodzeniami spowodowanymi przez sąsiadów lub zdarzeniami losowymi, które mogą mieć wpływ na mieszkanie znajdujące się w budynku wielorodzinnym.",
+      "type_factor": 1.5
+    }
+  },
+  {
+    "model": "insurance_app.HousePolicyType",
+    "pk": "Dom jednorodzinny",
+    "fields": {
+      "policy_type": "Dom jednorodzinny",
+      "policy_description": "To standardowe ubezpieczenie zapewnia ochronę dla typowego domu, obejmując zwykłe zagrożenia, takie jak pożary, kradzieże, czy zdarzenia związane z warunkami pogodowymi. W ramach tej polisy można oczekiwać podstawowego zakresu ochrony na wypadek nieprzewidzianych zdarzeń, które mogą wpłynąć na bezpieczeństwo domu.",
+      "type_factor": 1.5
+    }
+  },
+  {
+    "model": "insurance_app.HousePolicyType",
+    "pk": "Penthouse premium",
+    "fields": {
+      "policy_type": "Penthouse premium",
+      "policy_description": "Ta ekskluzywna polisa zapewnia rozszerzoną ochronę dla luksusowych domów, uwzględniając wyższe standardy i specjalne potrzeby właścicieli takich nieruchomości. Oprócz standardowych pokryć może ona oferować dodatkowe korzyści, takie jak serwis concierge w przypadku awarii, ochrona kolekcji sztuki czy dedykowany personel naprawczy",
+      "type_factor": 1.5
+    }
+  },
+  {
+    "model": "insurance_app.CarInsurance",
+    "pk": "20240422123456-ABCDE",
+    "fields": {
+      "policy_type": "Standard OC",
+      "customer": 11,
+      "valid_to": "2024-05-22",
+      "price": 800.00,
+      "car_mark_model": "Toyota Corolla",
+      "production_year": 2019,
+      "fuel_type": "Gasoline",
+      "mileage": 50000,
+      "average_year_mileage": 3,
+      "is_rented": false,
+      "number_of_owners": 2,
+      "driver_under_26": false
+    }
+  },
+  {
+    "model": "insurance_app.HouseInsurance",
+    "pk": "20240422123500-ABCDE",
+    "fields": {
+      "policy_type": "Dom jednorodzinny",
+      "customer": 11,
+      "valid_to": "2024-06-30",
+      "price": 1200.00,
+      "house_type": "Dom",
+      "number_of_owners": 1,
+      "house_area": 200,
+      "house_city": "Warszawa",
+      "house_value": 300000.00
+    }
+  }
+]

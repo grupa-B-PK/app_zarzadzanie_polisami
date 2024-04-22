@@ -5,6 +5,7 @@ from django.contrib.auth import get_user_model
 from .models import Customer
 from utils.validators import validate_pesel, validate_pesel_unique, validate_first_name, validate_last_name
 
+
 class CustomUserForm(UserCreationForm):
     class Meta:
         model = get_user_model()
@@ -13,6 +14,7 @@ class CustomUserForm(UserCreationForm):
             'first_name': forms.TextInput(attrs={'required': True}),
             'last_name': forms.TextInput(attrs={'required': True}),
         }
+
     def clean_first_name(self):
         first_name = self.cleaned_data.get('first_name')
         validate_first_name(first_name)
@@ -22,6 +24,7 @@ class CustomUserForm(UserCreationForm):
         last_name = self.cleaned_data.get('last_name')
         validate_last_name(last_name)
         return last_name
+
 
 class CustomerForm(forms.ModelForm):
     class Meta:
