@@ -10,7 +10,7 @@
 #### - Arkadiusz Cioroch
 
 [![GitHub](/readme_files/GitHub.png)](https://github.com/arek001c)
-
+[![LinkedIn](/readme_files/linked.png)](https://www.linkedin.com/in/arkadiusz-cioroch/)
 
 #### - Monika Ślimak
 
