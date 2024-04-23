@@ -1,0 +1,54 @@
+[
+  {
+    "model": "auth.User",
+    "pk": 11,
+    "fields": {
+      "username": "romek123",
+      "first_name": "Roman",
+      "last_name": "Kowalski",
+      "password": "pbkdf2_sha256$260000$RMzJFmWy3tJ1$RMjUjUz0v9rbIA+ApvB6JNSfK32ExS7GzGJocdR6zr4=",
+      "is_superuser": false,
+      "is_staff": false,
+      "is_active": true
+    }
+  },
+  {
+    "model": "accounts.Customer",
+    "pk": 11,
+    "fields": {
+      "user": 11,
+      "pesel": "51072756526",
+      "address": "ul. Kwiatowa 1, 00-001 Warszawa",
+      "phone_number": "123456789",
+      "privacy_policy_accepted": true,
+      "marketing_agreement": false
+    }
+  },
+  {
+	"model": "auth.User",
+	"pk": 8,
+	"fields": {
+	  "username": "admin1",
+	  "first_name": "Admin",
+	  "last_name": "Adminowski",
+	  "password": "pbkdf2_sha256$600000$miYClqd57dTfDJ7z4xkQDZ$sUX675jPNiA+iyspTgp/b3dnzP4wMuIQ4KPLr7C/Ptk=",
+	  "is_superuser": true,
+	  "is_staff": true,
+	  "is_active": true
+	}
+	},
+	{
+    "model": "accounts.Customer",
+    "pk": 8,
+    "fields": {
+      "user": 8,
+      "pesel": "80072023228",
+      "address": "ul. Stoczni 1, 00-005 Szczecin",
+      "phone_number": "123456453",
+      "privacy_policy_accepted": true,
+      "marketing_agreement": false
+    }
+  }
+
+
+]

@@ -4,17 +4,17 @@
 
 #### - Piotr Borecki
 
-[![GitHub](/readme_files/GitHub.png)](https://github.com/petermarkb)
+[![GitHub](/readme_files/github.png)](https://github.com/petermarkb)
 [![LinkedIn](/readme_files/linked.png)](https://www.linkedin.com/in/piotr-borecki/)
 
 #### - Arkadiusz Cioroch
 
-[![GitHub](/readme_files/GitHub.png)](https://github.com/arek001c)
+[![GitHub](/readme_files/github.png)](https://github.com/arek001c)
 [![LinkedIn](/readme_files/linked.png)](https://www.linkedin.com/in/arkadiusz-cioroch/)
 
 #### - Monika Ślimak
 
-[![GitHub](/readme_files/GitHub.png)](https://github.com/snaila)
+[![GitHub](/readme_files/github.png)](https://github.com/snaila)
 [![LinkedIn](/readme_files/linked.png)](www.linkedin.com/in/monika-ślimak/)
 
 )
@@ -100,6 +100,7 @@ Dodatkowo system umożliwia klientom rejestrację nowych kont lub logowanie się
 	- Istniejący użytkownicy mogą zalogować się na swoje konto za pomocą loginu i hasła.
 - **Edycja danych osobowych:**
 	- Zarejestrowani użytkownicy mogą edytować swoje dane kontakowe, takie jak adres oraz numer telefonu  na swojej podstronie profilowej.
+    - Możliwa jest również zmiana dotychczasowego hasła
 - **Autoryzacja i bezpieczeństwo:**
 	- Dostęp do poszczególnych funkcji aplikacji jest kontrolowany za pomocą mechanizmów autoryzacji Django, zapewniających bezpieczeństwo danych użytkowników.
 	- Formularze rejestracji i logowania są zabezpieczone przed atakami typu CSRF.
@@ -150,14 +151,21 @@ Przejdź do katalogu sklonowanego repozytorium i zainstaluj wymagane zależnośc
 ```
 pip install -r requirements.txt
 ```
-- **Utwórz bazę danych**
+- **Utwórz bazę danych i wypełnij ją danymi**
 
 Przed uruchomieniem poniższych poleceń upewnij się, że jesteś w katalogu ```\app_zarzadzanie_polisami\Insurance_company```
 
 ```
 python manage.py makemigrations 
 python manage.py migrate
+python manage.py loaddata fixtures/accounts.json 
+python manage.py loaddata fixtures/insurance_app.json
 ```
+
+- Zarejestruj się, aby uzyskać pełny dostęp do funkcjonalności
+- Możesz również skorzystać z konta testowego używając danych:
+  -  login: ```admin1```, password: ```admin```
+
 
 - **Uruchom aplikację** 
 
@@ -166,6 +174,8 @@ python manage.py runserver
 ```
 
 Aplikacja będzie dostępna pod adresem: ```http://localhost:8000```
+
+
 
 Ciesz się korzystaniem z naszego serwisu!
 
@@ -176,7 +186,10 @@ app_zarzadzanie_polisami
 ├── requirements.txt
 |   .gitignore
 |   __init__.py 
-|── Insurance_company 
+|── Insurance_company
+│   ├── fixtures
+│   │   └── accounts.json
+│   │   └── insurance_app.json
 |   manage.py
 |   struktura_projektu.txt
 |   __init__.py  
@@ -192,18 +205,7 @@ app_zarzadzanie_polisami
 |	|   |   
 |	|   +---migrations
 |	|   |   |   0001_initial.py
-|	|   |   |   0002_remove_customer_first_name_remove_customer_last_name_and_more.py
-|	|   |   |   0003_alter_customer_pesel.py
-|	|   |   |   0004_alter_customer_pesel.py
 |	|   |   |   __init__.py
-|	|   |   |   
-|	|   |   \---__pycache__
-|	|   |           0001_initial.cpython-311.pyc
-|	|   |           0002_remove_customer_first_name_remove_customer_last_name_and_more.cpython-311.pyc
-|	|   |           0003_alter_customer_pesel.cpython-311.pyc
-|	|   |           0004_alter_customer_pesel.cpython-311.pyc
-|	|   |           __init__.cpython-311.pyc
-|	|   |           
 |	|   +---templates
 |	|   |   \---accounts
 |	|   |           customer_detail.html
@@ -211,6 +213,7 @@ app_zarzadzanie_polisami
 |	|   |           logged_out.html
 |	|   |           login.html
 |	|   |           logout.html
+|	|   |           password_change.html
 |	|   |           register.html
 |	|           
 |	+---insurance_app
@@ -226,50 +229,8 @@ app_zarzadzanie_polisami
 |	|   |   
 |	|   +---migrations
 |	|   |   |   0001_initial.py
-|	|   |   |   0002_carinsurance_price_carinsurance_valid_to.py
-|	|   |   |   0003_houseinsurance_remove_carinsurance_id_and_more.py
-|	|   |   |   0004_carinsurance_policy_type_and_more.py
-|	|   |   |   0005_carinsurance_customer_houseinsurance_customer.py
-|	|   |   |   0005_carpolicytype_housepolicytype_policystatus_and_more.py
-|	|   |   |   0006_merge_20240407_1155.py
-|	|   |   |   0007_alter_carinsurance_average_year_mileage_and_more.py
-|	|   |   |   0008_alter_carinsurance_average_year_mileage.py
-|	|   |   |   0009_alter_carinsurance_average_year_mileage.py
-|	|   |   |   0010_alter_carinsurance_production_year_and_more.py
-|	|   |   |   0011_remove_carinsurance_car_model_and_more.py
-|	|   |   |   0012_alter_carinsurance_car_mark_model.py
-|	|   |   |   0013_alter_carinsurance_car_mark_model.py
-|	|   |   |   0014_carpolicyfactors.py
-|	|   |   |   0015_housepolicyfactors.py
-|	|   |   |   0016_housepolicyfactors_base_and_more.py
-|	|   |   |   0017_alter_carinsurance_price_and_more.py
-|	|   |   |   0018_alter_housepolicyfactors_house_area_factor_1_and_more.py
 |	|   |   |   __init__.py
-|	|   |   |   
-|	|   |   \---__pycache__
-|	|   |           0001_initial.cpython-311.pyc
-|	|   |           0002_carinsurance_price_carinsurance_valid_to.cpython-311.pyc
-|	|   |           0003_houseinsurance_remove_carinsurance_id_and_more.cpython-311.pyc
-|	|   |           0004_carinsurance_policy_type_and_more.cpython-311.pyc
-|	|   |           0005_carinsurance_customer_houseinsurance_customer.cpython-311.pyc
-|	|   |           0005_carpolicytype_housepolicytype_policystatus_and_more.cpython-311.pyc
-|	|   |           0006_merge_20240407_1155.cpython-311.pyc
-|	|   |           0007_alter_carinsurance_average_year_mileage_and_more.cpython-311.pyc
-|	|   |           0008_alter_carinsurance_average_year_mileage.cpython-311.pyc
-|	|   |           0009_alter_carinsurance_average_year_mileage.cpython-311.pyc
-|	|   |           0010_alter_carinsurance_production_year_and_more.cpython-311.pyc
-|	|   |           0010_carpolicyfactors.cpython-311.pyc
-|	|   |           0011_alter_carpolicyfactors_base.cpython-311.pyc
-|	|   |           0011_remove_carinsurance_car_model_and_more.cpython-311.pyc
-|	|   |           0012_alter_carinsurance_car_mark_model.cpython-311.pyc
-|	|   |           0013_alter_carinsurance_car_mark_model.cpython-311.pyc
-|	|   |           0014_carpolicyfactors.cpython-311.pyc
-|	|   |           0015_housepolicyfactors.cpython-311.pyc
-|	|   |           0016_housepolicyfactors_base_and_more.cpython-311.pyc
-|	|   |           0017_alter_carinsurance_price_and_more.cpython-311.pyc
-|	|   |           0018_alter_housepolicyfactors_house_area_factor_1_and_more.cpython-311.pyc
-|	|   |           __init__.cpython-311.pyc
-|	|   |           
+|	|   |   |
 |	|   +---templates
 |	|   |       404.html
 |	|   |       base.html
@@ -284,18 +245,6 @@ app_zarzadzanie_polisami
 |	|   |       policy_house_create.html
 |	|   |       policy_house_detail.html
 |	|   |       policy_list.html
-|	|   |       
-|	|   \---__pycache__
-|	|           admin.cpython-311.pyc
-|	|           apps.cpython-311.pyc
-|	|           forms.cpython-311.pyc
-|	|           logic_temp.cpython-311.pyc
-|	|           models.cpython-311.pyc
-|	|           tests.cpython-311.pyc
-|	|           urls.cpython-311.pyc
-|	|           views.cpython-311.pyc
-|	|           __init__.cpython-311.pyc
-|	|           
 |	+---Insurance_company
 |	|   |   asgi.py
 |	|   |   settings.py
