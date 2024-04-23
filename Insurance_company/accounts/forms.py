@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import get_user_model
 
 from .models import Customer
-from utils.validators import validate_pesel, validate_pesel_unique, validate_first_name, validate_last_name
+from utils.validators import validate_pesel, validate_pesel_unique, validate_uppercase
 
 
 class CustomUserForm(UserCreationForm):
@@ -17,12 +17,12 @@ class CustomUserForm(UserCreationForm):
 
     def clean_first_name(self):
         first_name = self.cleaned_data.get('first_name')
-        validate_first_name(first_name)
+        validate_uppercase(first_name)
         return first_name
 
     def clean_last_name(self):
         last_name = self.cleaned_data.get('last_name')
-        validate_last_name(last_name)
+        validate_uppercase(last_name)
         return last_name
 
 
@@ -33,15 +33,6 @@ class CustomerForm(forms.ModelForm):
 
     def clean_pesel(self):
         pesel = self.cleaned_data.get('pesel')
-        instance = getattr(self, 'instance', None)
-
-        queryset = Customer.objects.filter(pesel=pesel)
-
-        if instance and instance.pk:
-            queryset = queryset.exclude(pk=instance.pk)
-
-        if queryset.exists():
-            validate_pesel_unique(pesel)
-
+        validate_pesel_unique(pesel)
         validate_pesel(pesel)
         return pesel
