@@ -5,29 +5,74 @@
 {% endblock title %}
 
 {% block content %}
-    <h2> Podsumowanie wyceny:</h2>
-    <p>Szczegółowy opis polisy: {{ policy_description }}</p>
-    <ul>
-        <li>Typ polisy: {{ house_policy.policy_type }}</li>
-        <li>Wysokość składki: {{ house_calculated_price }} PLN</li>
-        <li>Termin obowiązywania ochrony: {{ house_policy.valid_to }}</li>
-        <li>Typ domu: {{ house_policy.house_type }}</li>
-        <li>Powierzchnia domu: {{ house_policy.house_area }} m²</li>
-        <li>Miasto: {{ house_policy.house_city }}</li>
-        <li>Wartość domu: {{ house_policy.house_value }} PLN</li>
-        <li>Liczba właścicieli: {{ house_policy.number_of_owners }}</li>
-    </ul>
+     <h3 style="text-align:center;margin-top:3rem;">Podsumowanie warunków Twojej polisy:</h3>
+
+    <div style="width:60%;margin-top:3rem;margin-left:auto;margin-right:auto;">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Wymiar</th>
+                <th scope="col">Wartość</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Typ polisy:</td>
+                <td>{{ house_policy.policy_type }}</td>
+            </tr>
+            <tr>
+                <td>Szczegółowy opis polisy:</td>
+                <td>{{ policy_description }}</td>
+            </tr>
+            <tr>
+                <td>Termin obowiązywania ochrony:</td>
+                <td>{{ house_policy.valid_to }}</td>
+            </tr>
+            <tr>
+                <td>Wysokość składki:</td>
+                <td>{{ house_calculated_price }} PLN</td>
+            </tr>
+            <tr>
+                <td>Typ domu:</td>
+                <td>{{ house_policy.house_type }}</td>
+            </tr>
+            <tr>
+                <td>Powierzchnia domu:</td>
+                <td>{{ house_policy.house_area }} m²</td>
+            </tr>
+            <tr>
+                <td>Miasto:</td>
+                <td>{{ house_policy.house_city }}</td>
+            </tr>
+            <tr>
+                <td>Wartość domu:</td>
+                <td>{{ house_policy.house_value }} PLN</td>
+            </tr>
+            <tr>
+                <td>Liczba właścicieli:</td>
+                <td>{{ house_policy.number_of_owners }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<div style="width:30%;margin-left:auto;margin-right:auto;margin-top:4rem;">
     <form action="{% url 'policy_house_confirm' %}" method="post">
         {% csrf_token %}
-        <input type="submit" value="Zawrzyj umowę">
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-success">Zawieram umowę</button>
+    </div>
     </form>
 
-    <div><a href="{% url 'policy_house_create' %}">Anuluj</a></div>
+    <div class="d-grid gap-2" style="margin-top: 3rem;">
+        <a style="text-decoration:none;" href="{% url 'policy_house_create' %}" class="btn btn-warning">Powrót do
+            kreatora polisy</a>
+    </div>
 
     <div style="text-align:center;margin-top:10rem;left:auto;right:auto;width:100%;">
         <div class="btn btn-light"><a style="text-decoration:none;" href="{% url 'main_page' %}">Powrót do strony
             głównej</a>
         </div>
     </div>
+</div>
 
 {% endblock content %}

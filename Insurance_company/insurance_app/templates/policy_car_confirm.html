@@ -1,34 +1,81 @@
 {% extends "base.html" %}
 
 {% block title %}
-    Podsumowanie wyceny:
+    Podsumowanie wyceny
 {% endblock title %}
 
 {% block content %}
 
-    <h2> Podsumowanie wyceny:</h2>
-    <p>Szczegółowy opis polisy: {{ policy_description }}</p>
-    <ul>
-        <li>Typ polisy: {{ car_policy.policy_type }}</li>
-        <li>Wysokość składki: : {{ calculated_price }} PLN</li>
-        <li>Termin obowiązywania ochrony: {{ car_policy.valid_to }}</li>
-        <li>Marka i model pojazdu: {{ car_policy.car_mark_model }}</li>
-        <li>Rok produkcji: {{ car_policy.production_year }}</li>
-        <li>Typ paliwa: {{ car_policy.fuel_type }}</li>
-        <li>Przebieg: {{ car_policy.mileage }} km</li>
-        <li>Czy wynajmowane: {% if car_policy.is_rented %}Tak{% else %}Nie{% endif %}</li>
-        <li>Liczba współwłaścicieli: {{ car_policy.number_of_owners }}</li>
-    </ul>
+     <h3 style="text-align:center;margin-top:3rem;">Podsumowanie warunków Twojej polisy:</h3>
+
+    <div style="width:60%;margin-top:3rem;margin-left:auto;margin-right:auto;">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Wymiar</th>
+                <th scope="col">Wartość</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>Typ polisy:</td>
+                <td>{{ car_policy.policy_type }}</td>
+            </tr>
+            <tr>
+                <td>Szczegółowy opis polisy:</td>
+                <td>{{ policy_description }}</td>
+            </tr>
+            <tr>
+                <td>Termin obowiązywania ochrony:</td>
+                <td>{{ car_policy.valid_to }}</td>
+            </tr>
+            <tr>
+                <td>Wysokość składki:</td>
+                <td>{{ calculated_price }} PLN</td>
+            </tr>
+            <tr>
+                <td>Marka i model pojazdu:</td>
+                <td>{{ car_policy.car_mark_model }}</td>
+            </tr>
+            <tr>
+                <td>Rok produkcji:</td>
+                <td>{{ car_policy.production_year }}</td>
+            </tr>
+            <tr>
+                <td>Typ paliwa:</td>
+                <td>{{ car_policy.fuel_type }}</td>
+            </tr>
+            <tr>
+                <td>Przebieg:</td>
+                <td>{{ car_policy.mileage }}km</td>
+            </tr>
+            <tr>
+                <td>Czy wynajmowane:</td>
+                <td>{% if car_policy.is_rented == True %}Tak{% else %}Nie{% endif %}</td>
+            </tr>
+            <tr>
+                <td>Liczba współwłaścicieli:</td>
+                <td>{{ car_policy.number_of_owners }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<div style="width:30%;margin-left:auto;margin-right:auto;margin-top:4rem;">
     <form action="{% url 'policy_car_confirm' %}" method="post">
         {% csrf_token %}
-        <input type="submit" value="Zawrzyj umowę">
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-success">Zawieram umowę</button>
+    </div>
     </form>
 
-    <div><a href="{% url 'policy_car_create' %}">Anuluj</a></div>
+    <div class="d-grid gap-2" style="margin-top: 3rem;">
+        <a style="text-decoration:none;" href="{% url 'policy_car_create' %}" class="btn btn-warning">Powrót do kreatora polisy</a>
+    </div>
 
     <div style="text-align:center;margin-top:10rem;left:auto;right:auto;width:100%;">
         <div class="btn btn-light"><a style="text-decoration:none;" href="{% url 'main_page' %}">Powrót do strony
             głównej</a>
         </div>
     </div>
+</div>
 {% endblock content %}
