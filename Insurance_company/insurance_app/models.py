@@ -68,13 +68,6 @@ class HousePolicyFactors(models.Model):
     }
 
 
-class PolicyStatus(models.Model):
-    STATUS_CHOICES = {
-        "Active": "Your car is protected - policy is up to date.",
-        "Expired": "Policy is expired"
-    }
-
-
 class CarPolicyType(models.Model):
     policy_type = models.CharField(primary_key=True, max_length=100)
     policy_description = models.TextField()
