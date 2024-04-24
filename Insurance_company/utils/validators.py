@@ -39,9 +39,3 @@ def validate_past_date(value):
 def validate_uppercase(value):
     if not (value and value[0].isupper() and value[1:].islower()):
         raise ValidationError('The value must start with an uppercase letter and contain no other uppercase letters.')
-
-def validate_first_name(value):
-    validate_uppercase(value)
-
-def validate_last_name(value):
-    validate_uppercase(value)
