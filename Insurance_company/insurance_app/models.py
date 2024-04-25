@@ -160,13 +160,6 @@ class CarInsurance(models.Model):
     def __repr__(self):
         return f"Nazwa polisy: {self.policy_type}"
 
-    @property
-    def status_validation(self):
-        if self.valid_to < date.today():
-            return PolicyStatus.STATUS_CHOICES["Active"]
-        else:
-            return PolicyStatus.STATUS_CHOICES["Expired"]
-
 
 class HouseInsurance(models.Model):
     HOUSE_TYPES = (
