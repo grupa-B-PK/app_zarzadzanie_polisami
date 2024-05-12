@@ -15,9 +15,8 @@
 #### - Monika Ślimak
 
 [![GitHub](/readme_files/github.png)](https://github.com/snaila)
-[![LinkedIn](/readme_files/linked.png)](www.linkedin.com/in/monika-ślimak/)
+[![LinkedIn](/readme_files/linked.png)](https://www.linkedin.com/in/monika-ślimak/)
 
-)
 
 ---
 
